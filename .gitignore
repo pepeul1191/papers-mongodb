@@ -18,5 +18,4 @@ dist
 .~lock*
 public/uploads
 public/templates
-*.db
 tmp
