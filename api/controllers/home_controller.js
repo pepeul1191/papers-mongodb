@@ -13,7 +13,7 @@ router.get('', function(req, res, next) {
     jss: indexJs(),
     contents: {},
   };
-  res.render('home/index', locals);
+  res.render('home/indexd', locals);
 });
 
 module.exports = router; 
