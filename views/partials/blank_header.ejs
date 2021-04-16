@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= locals.title %></title>
+    <link rel="shortcut icon" href="<%= constants.static_url %>favicon.ico">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Inicio Load_CSS-->
+    <%- helpers.loadCss(locals.csss) %>
+    <!-- Fin CSS-->
+    <script type="text/javascript">
+      var BASE_URL = '<%= constants.base_url %>';
+      var STATICS_URL  = '<%= constants.static_url %>';
+      var SOCKET_URL  = '<%= constants.socket_url %>';
+      var CSRF = "<%=constants.csrf.secret%>";
+      var CSRF_KEY = "<%=constants.csrf.key%>";
+    </script>
+  </head>
+  <body>

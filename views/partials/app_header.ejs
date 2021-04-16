@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.title %></title>
+  <link rel="shortcut icon" href="<%= constants.static_url %>favicon.ico">
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Inicio Load_CSS-->
+  <%- helpers.loadCss(locals.csss) %>
+  <!-- Fin CSS-->
+  <script type="text/javascript">
+    var BASE_URL = '<%= constants.base_url %>';
+    var STATICS_URL  = '<%= constants.static_url %>';
+    var CSRF = "<%=constants.csrf.secret%>";
+    var CSRF_KEY = "<%=constants.csrf.key%>";
+  </script>
+</head>
+<body>
+  <!-- Inicio modal -->
+  <button type="button" class="btn btn-primary btn-lg d-none" data-toggle="modal" data-target="#modal-container" data-backdrop="static"  data-backdrop="static" id="btnModal">Launch demo modal</button>
+  <div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  </div>
+  <!-- Fin modal -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">AdminSite</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Usuarios <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#/systems">Sistemas <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sistemas
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Lista de Sistemas</a>
+              <a class="dropdown-item" href="#">Permisos</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Asociar Permisos a Sistemas</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login/close">Salir</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
