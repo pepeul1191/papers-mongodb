@@ -1,0 +1,22 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "node ./node_modules/nodemon/bin/nodemon.js node ./bin/www --ignore './public/' --ignore './resources/'",
+    "bower:install": "node ./node_modules/.bin/bower install"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "bower": "^1.8.12",
+    "nodemon": "^2.0.7"
+  }
+}
