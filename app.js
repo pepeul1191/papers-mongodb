@@ -7,7 +7,6 @@ var boostrap = require('./config/bootstrap');
 var middlewares = require('./config/middlewares');
 
 var app = express();
-
 // express setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -19,9 +18,9 @@ app.use(middlewares.preResponse());
 app.use(express.static(path.join(__dirname, 'public')));
 // load controllers
 boostrap(app);
-// catch 404 and forward to error handler
+// custom redirect catch 404 and forward to error handler
 app.use(middlewares.error404());
-// error handler
+// express error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
