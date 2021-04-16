@@ -17,5 +17,6 @@
   --nav-text-secondary-color: #fdfdfd;
   --footer-background-primary: #800000;
   --footer-text-primary-color: #fff;
-  --footer-text-secondary-color: yellow;
+  --footer-text-secondary-color: red;
+  --footer-text-terceary-color: red;
 }
