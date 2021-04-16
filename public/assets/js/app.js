@@ -446,4 +446,5 @@ function sendPDFs(){
 
 $(document).ready(function() {
   new AppView();
+  alert('XD');
 });
