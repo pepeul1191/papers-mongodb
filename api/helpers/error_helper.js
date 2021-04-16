@@ -1,6 +1,6 @@
 var constants = require('../../config/constants')();
 
-const indexCss = () => {
+const accessCss = () => {
   var resp = [];
   if(constants.static == 'dev'){
     resp = [
@@ -18,7 +18,7 @@ const indexCss = () => {
   return resp;
 }
 
-const indexJs = () => {
+const accessJs = () => {
   var resp = [];
   if(constants.static == 'dev'){
     resp = [
@@ -33,5 +33,5 @@ const indexJs = () => {
   return resp;
 }
 
-exports.indexCss= indexCss;
-exports.indexJs= indexJs;
+exports.accessCss= accessCss;
+exports.accessJs= accessJs;

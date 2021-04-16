@@ -1,0 +1,13 @@
+sp:
+  login_mangament: Bienvenido
+  login_index: Bienvenido
+  login_sign_in: Crear Cuenta
+  login_reset: Restablecer Contraseña
+  managment_index: Administración
+  password_create: Crear Contraseña
+  password_update: Cambiar Contraseña
+  key_activation: Cuenta Activada
+  error: Upps, ha ocurrido un error
+  home_index: Inicio - Chat
+  admin_index: Gestión de la Aplicación
+  admin_login: Acceso a Gestión de la Aplicación

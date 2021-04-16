@@ -1,0 +1,38 @@
+sp:
+  managment:
+    - name: Accesos
+      url: access/
+      icon: ''
+      subtitles:
+        - name: Maestros
+          items:
+            - name: Gestión de Sistemas
+              url: access/#/system
+        - name: Gestión de Usuarios
+          items:
+            - name: Gestión de Usuarios
+              url: access/user/#/
+            - name: Agregar Usuario
+              url: access/user/#/add
+    - name: Administración
+      url: managment/
+      icon: ''
+      subtitles:
+        - name: Maestros
+          items:
+            - name: Gestión de Ubicaciones
+              url: managment/#/location
+            - name: Gestión de Servicios
+              url: managment/#/service
+            - name: Gestión de Tipos de Canchas
+              url: managment/#/field_type
+            - name: Gestión de Bancos
+              url: managment/#/bank
+            - name: Gestión de Banners
+              url: managment/#/banner
+        - name: Clientes
+          items:
+            - name: Gestión de Clientes
+              url: managment/#/client
+            - name: Agregar Cliente
+              url: managment/#/client/add

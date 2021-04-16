@@ -1,0 +1,14 @@
+<%- include('../partials/blank_header.ejs') %>
+<div class="row text-center">
+  <h1 class="align-text-bottom"><%= contents.number %></h1>
+</div>
+<div class="row text-center">
+	<div class="error-divider">
+		<h2><%= contents.message %></h2>
+		<p class="description"><%= contents.description %></p>
+	</div>
+	<a href="<%= constants.base_url + contents.link_url %>" class="return-btn">
+    <i class="<%= contents.link_icon %>"></i><%= contents.link_message %>
+  </a>
+</div>
+<%- include('../partials/blank_footer.ejs') %>

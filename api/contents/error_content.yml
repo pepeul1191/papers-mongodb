@@ -1,0 +1,21 @@
+sp:
+  '404': 
+    number: 404
+    message: Archivo no encontrado
+    description: La página que busca no se encuentra en el servidor
+    icon: fa fa-exclamation-triangle
+    link_message: Ir al Inicio
+    link_icon: fa fa-home
+    link_url: ''
+  '5051':
+    number: 5050
+    message: Acceso restringido
+    description: Necesita estar logueado
+    icon: fa fa-ban
+    link_message: Ir al Inicio
+    link_icon: fa fa-home
+    link_url: ''
+  csrf:
+    message_form: Valor CSRF no coincide
+  error_handler:
+    post_404: Recurso no encontrado  

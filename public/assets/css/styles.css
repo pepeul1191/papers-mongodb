@@ -1,0 +1,111 @@
+html {
+  font-size:0.95rem !important;
+  background: #f1f1f1;
+}
+
+footer{
+  border-top: soild rgba(0,0,0,.5) 2px;
+  color: #A9A9A9;
+  margin-top: 25px;
+  text-align: right;
+  background: #f1f1f1;
+  font-weight: 400;
+  padding-top: 10px;
+  margin-right: 20px;
+}
+
+footer > a{
+  border-top: soild rgba(0,0,0,.5) 2px;
+  color: #343434;
+  margin-top: 25px;
+  text-align: right;
+  background: #f1f1f1;
+  font-weight: 400;
+}
+
+.container-fluid{
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.footer-copyright{
+  background: var(--secondary-color) !important;
+}
+
+footer > .container > .row > .col-md-3 > ul > li > a, .footer-copyright > b > a{
+  color: #FDFDFD;
+}
+
+.link-disabled:hover {
+  cursor: not-allowed;
+}
+
+.color-error{
+  color: var(--error-color);
+}
+
+.color-warning{
+  color: var(--warning-color);
+}
+.color-success{
+  color: var(--success-color);
+}
+
+
+.btn, .form-control, .modal-content{
+  border-radius: 0px;
+}
+
+.custom-file-label{
+  border-radius: 0px;
+}
+
+.custom-file{
+  width: 75%;
+}
+
+.small, small {
+  font-size: 85%;
+}
+
+.has-danger {
+  border-color: var(--error-color);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.form-group > label{
+  width: 100%;
+}
+
+.btn > i{
+  margin-right: 10px;
+}
+
+label, .btn{
+  font-weight: 300;
+}
+
+.no-height{
+  height:0px;
+}
+
+.form-group > .radio{
+  margin-top: 10px;
+}
+
+.radio > .radio-inline:not(:last-child){
+  margin-right: 20%;
+}
+
+.radio-inline > input{
+  margin-right: 10px;
+}
+
+td{
+  font-weight: 300;
+}
+
+#app{
+  background: white;
+}
