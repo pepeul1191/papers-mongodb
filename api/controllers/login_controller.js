@@ -11,6 +11,8 @@ var index = (req, res, next) => {
     helpers: helpers,
     csss: indexCss(),
     jss: indexJs(),
+    message: '',
+    messageColor: '',
     contents: {},
   };
   res.render('login/index', locals);
