@@ -5,7 +5,7 @@ var helpers = require('../../config/helpers');
 const { getContent, getTitle } = require('../../config/contents');
 const { accessCss, accessJs } = require('../helpers/error_helper');
 
-router.get('/access/:num', function(req, res, next) {
+router.get('/access/:num', (req, res, next) => {
   var status = 404;
   var errorNumber = req.params.num;
   var registeredErrors = ['404', '5051']

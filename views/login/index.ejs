@@ -1,0 +1,92 @@
+<%- include('../partials/blank_header') %>
+<!-- LOGIN -->
+<form class="form-signin" action="/login" method="post" id="login" style="display: none;">
+  <h1 class="h3 mb-3 font-weight-normal">Bienvenido</h1>
+  <input type="hidden" name="key" value="value">
+  <span class="extraData"></span>
+  <!--USER -->
+  <label for="user" class="sr-only">User</label>
+  <input type="text" id="user" class="form-control" placeholder="Usuario" required="" autofocus="" name="user">
+  <!--CSRF -->
+  <input type="hidden" name="<?php echo $this->config->item('csrf')['key']; ?>" value="<?php echo $this->config->item('csrf')['value']; ?>">
+  <!--PASS -->
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="" name="password">
+  <!--MESSAGE-->
+  <p class="<?php echo $message_color; ?> message" style="margin-top:10px;" id="login-message"><?php echo $message; ?></p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    Ingresar
+  </button>
+  <!--FooTER LOGIN NAV -->
+  <div class="link-login">
+    <a class="" href="/login/sign-in">
+      Registrarse
+    </a>
+    <a id="forgotpassword" class="pull-right" href="/login/forgot-password">
+      Olvidó su Contraseña
+    </a>
+  </div>
+  <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+</form>
+<!-- SIGN IN -->
+<form class="form-signin" action="/sign-in" method="post" id="sign-in" style="display: none;">
+  <h1 class="h3 mb-3 font-weight-normal">Crear Cuenta</h1>
+  <input type="hidden" name="key" value="value">
+  <span class="extraData"></span>
+  <!--USER -->
+  <label for="user" class="sr-only">User</label>
+  <input type="text" id="user" class="form-control" placeholder="Usuario" required="" autofocus="" name="user">
+  <!--EMAIL -->
+  <label for="email" class="sr-only">email</label>
+  <input type="text" id="email" class="form-control" placeholder="Correo" required="" autofocus="" name="email">
+  <!--CSRF -->
+  <input type="hidden" name="<?php echo $this->config->item('csrf')['key']; ?>" value="<?php echo $this->config->item('csrf')['value']; ?>">
+  <!--PASS -->
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="" name="password">
+  <!--MESSAGE-->
+  <p class="<?php echo $message_color; ?> message" style="margin-top:10px;" id="login-message"><?php echo $message; ?></p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit" disabled>
+    Crear Usuario
+  </button>
+  <!--FooTER LOGIN NAV -->
+  <div class="link-login">
+    <a class="" href="/login">
+      Ingresar
+    </a>
+    <a id="forgotpassword" class="pull-right" href="/login/forgot-password">
+      Olvidó su Contraseña
+    </a>
+  </div>
+  <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+</form>
+<!-- FORGOT PASSWORD -->
+<form class="form-signin" action="/forgot-password" method="post" id="forgot-password" style="display: none;">
+  <h1 class="h3 mb-3 font-weight-normal">Recuperar Contraseña</h1>
+  <input type="hidden" name="key" value="value">
+  <span class="extraData"></span>
+  <!--EMAIL -->
+  <label for="email" class="sr-only">email</label>
+  <input type="text" id="email" class="form-control" placeholder="Correo" required="" autofocus="" name="email">
+  <!--CSRF -->
+  <input type="hidden" name="<?php echo $this->config->item('csrf')['key']; ?>" value="<?php echo $this->config->item('csrf')['value']; ?>">
+  <!--MESSAGE-->
+  <p class="<?php echo $message_color; ?> message" style="margin-top:10px;" id="login-message"><?php echo $message; ?></p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    Enviar Solicitud
+  </button>
+  <!--FooTER LOGIN NAV -->
+  <div class="link-login">
+    <a class="" href="/login">
+      Ingresar
+    </a>
+    <a class="pull-right" href="/login/sign-in">
+      Registrarse
+    </a>
+  </div>
+  <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+</form>
+<%- include('../partials/blank_footer') %>

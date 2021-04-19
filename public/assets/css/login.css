@@ -15,16 +15,16 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
+  /*
   background-color: #f5f5f5;
+  */
 }
 
 .form-signin {
   width: 100%;
   max-width: 330px;
-  padding: 30px 30px 10px 30px;
+  padding: 15px;
   margin: 0 auto;
-  background: #fdfdfd;
-  border: 1px solid #cccccc;
 }
 .form-signin .checkbox {
   font-weight: 400;
@@ -95,23 +95,10 @@ body {
 	border: 1px solid #c5cbd0;
 }
 
-button, input[type=text], input[type=password], input[type=email]{
-  border-radius: 0px !important;
-}
-
 button{
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
-h1 {
-  font-size: 18px !important;
-}
-
-button, input[type=text], input[type=password], input[type=email] {
-  font-size: 12px !important;
-}
-
-a, p {
-  font-size: 12px !important;
+.pull-right{
+  float:right;
 }
