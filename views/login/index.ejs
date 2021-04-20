@@ -34,7 +34,7 @@
   <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
 </form>
 <!-- SIGN IN -->
-<form class="form-signin" action="/sign-in" method="post" id="sign-in" style="display: none;">
+<form class="form-signin" action="/login/sign-in" method="post" id="sign-in" style="display: none;">
   <h1 class="h3 mb-3 font-weight-normal">Crear Cuenta</h1>
   <input type="hidden" name="key" value="value">
   <span class="extraData"></span>
@@ -43,7 +43,7 @@
   <input type="text" id="user" class="form-control" placeholder="Usuario" required="" autofocus="" name="user">
   <!--EMAIL -->
   <label for="email" class="sr-only">email</label>
-  <input type="text" id="email" class="form-control" placeholder="Correo" required="" autofocus="" name="email">
+  <input type="email" id="email" class="form-control" placeholder="Correo" required="" autofocus="" name="email">
   <!--CSRF -->
   <input type="hidden" name="<%= constants.csrf.key %>" value="<%= constants.csrf.key %>">
   <!--PASS -->

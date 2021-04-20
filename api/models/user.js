@@ -23,9 +23,11 @@ module.exports = db.define('users', {
   activationKey: { 
     type: Sequelize.STRING, 
     allowNull: false,  
+    field: 'activation_key'
   },
   resetKey: { 
     type: Sequelize.STRING, 
     allowNull: false,  
+    field: 'reset_key'
   },
 });

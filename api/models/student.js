@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 var db = require('../../config/database');
 
-// Student
 module.exports = db.define('students', {
 	id: { 
     type: Sequelize.INTEGER, 
