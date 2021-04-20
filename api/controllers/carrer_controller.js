@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
+const sessionTrue = require('../middlewares/session_true');
 const { indexCss, indexJs, prevMessage } = require('../helpers/carrer_helper');
 const Carrer = require('../models/carrer');
 
-router.get('', async (req, res, next) => {
+router.get('', sessionTrue, async (req, res, next) => {
   // logic
   var carrers = await Carrer.findAll({});
   var prev = req.query.prev;

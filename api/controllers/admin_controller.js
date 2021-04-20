@@ -12,6 +12,7 @@ router.get('/', sessionTrue, (req, res, next) => {
     title: 'Bienvenido',
     helpers: helpers,
     csss: indexCss(),
+    session: req.session,
     jss: indexJs(),
     contents: {},
   };
