@@ -11,24 +11,25 @@ router.get('', (req, res, next) => {
     title: 'Bienvenido',
     helpers: helpers,
     csss: indexCss(),
+    session: req.session,
     jss: indexJs(),
     contents: {},
   };
   res.status(200).render('home/index', locals);
 });
 
-//router.get('/user', middlewares.sessionTrue(), function(req, res, next) {
-router.get('/user', (req, res, next) => {
+//router.get('/profile', middlewares.sessionTrue(), function(req, res, next) {
+router.get('/profile', (req, res, next) => {
   body = 'Usuario: ' + req.session.user + '<br>' +
     'Estado: ' + req.session.state + '<br>' +
     'Momento: ' + req.session.time;
   res.status(200).send(body);
 });
 
-//router.get('/close', middlewares.sessionTrue(), function(req, res, next) {
-router.get('/exit', (req, res, next) => {
+//router.get('/sign-out', middlewares.sessionTrue(), function(req, res, next) {
+router.get('/sign-out', (req, res, next) => {
   req.session = null;
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 module.exports = router; 

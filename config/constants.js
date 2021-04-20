@@ -4,9 +4,9 @@ module.exports = () => {
   dotenv.config();
   if(process.env.ENV == 'local'){
     return {
-      base_url: 'http://localhost:3000/',
-      static_url: 'http://localhost:3000/',
-      socket_url: 'ws://localhost:3000/',
+      base_url: 'http://192.168.1.4:3000/',
+      static_url: 'http://192.168.1.4:3000/',
+      socket_url: 'ws://192.168.1.4:3000/',
       static: 'dev',
       session: true,
       csrf: {
