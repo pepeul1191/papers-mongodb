@@ -25,6 +25,10 @@ router.get('', async (req, res, next) => {
 router.get('/add', (req, res, next) => {
   // logic
   var formTitle = 'Agregar Carrera';
+  var carrer = {
+    id: 'E',
+    name: '',
+  };
   // response
   var locals = {
     constants: constants,
@@ -33,6 +37,7 @@ router.get('/add', (req, res, next) => {
     csss: indexCss(),
     session: req.session,
     formTitle: formTitle,
+    carrer: carrer,
     action: 'add',
     jss: indexJs(),
     contents: {},
@@ -59,6 +64,20 @@ router.post('/add', async (req, res, next) => {
 router.get('/edit/:id', async (req, res, next) => {
   // logic
   var formTitle = 'Editar Carrera';
+  var carrer = null;
+  try{
+    carrer = await Carrer.findOne({
+      where: {
+        id: req.params.id,
+      }
+    });
+    console.log(carrer)
+  }catch(error){
+    console.log(error);
+  }
+  if(carrer == null){
+    return res.redirect('/error/access/404');
+  }
   // response
   var locals = {
     constants: constants,
@@ -68,10 +87,32 @@ router.get('/edit/:id', async (req, res, next) => {
     session: req.session,
     formTitle: formTitle,
     action: 'edit',
+    carrer: carrer,
     jss: indexJs(),
     contents: {},
   };
   res.status(200).render('carrer/detail', locals);
+});
+
+router.post('/edit', async (req, res, next) => {
+  // data
+  var id = req.body.id;
+  var name = req.body.name;
+  // logic
+  try{
+    await Carrer.update({
+      name: name,
+    }, {
+      where: {
+        id: id  
+      }
+    });
+  }catch(error){
+    console.log(error);
+    return res.redirect('/carrer?prev=edit-error');
+  } 
+  // response
+  return res.redirect('/carrer?prev=edit-ok');
 });
 
 module.exports = router; 
