@@ -1,4 +1,7 @@
 var constants = require('../../config/constants')();
+// var nodemailer = require('nodemailer');
+// var mailTemplate = require( '../../views/mails/congratulaion');
+// var _ = require('underscore');
 
 const indexCss = () => {
   var resp = [];
