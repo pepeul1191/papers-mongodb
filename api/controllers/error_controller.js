@@ -14,6 +14,7 @@ router.get('/access/:num', (req, res, next) => {
   if (registeredErrors.indexOf(errorNumber) == -1){
     errorNumber = '404'
   }
+  // response
   var locals = {
     constants: constants,
     title: getTitle()[lang]['error'],
