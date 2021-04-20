@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
-const { indexCss, indexJs } = require('../helpers/carrer_helper');
+const { indexCss, indexJs, prevMessage } = require('../helpers/carrer_helper');
 const Carrer = require('../models/carrer');
 
 router.get('', async (req, res, next) => {
   // logic
   var carrers = await Carrer.findAll({});
+  var prev = req.query.prev;
   // response
   var locals = {
     constants: constants,
@@ -15,6 +16,7 @@ router.get('', async (req, res, next) => {
     helpers: helpers,
     csss: indexCss(),
     session: req.session,
+    prevMessage: prevMessage(prev),
     carrers: carrers,
     jss: indexJs(),
     contents: {},
@@ -71,7 +73,7 @@ router.get('/edit/:id', async (req, res, next) => {
         id: req.params.id,
       }
     });
-    console.log(carrer)
+    // console.log(carrer)
   }catch(error){
     console.log(error);
   }
