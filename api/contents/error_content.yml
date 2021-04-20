@@ -7,8 +7,8 @@ sp:
     link_message: Ir al Inicio
     link_icon: fa fa-home
     link_url: ''
-  '5051':
-    number: 5050
+  '8080':
+    number: 8080
     message: Acceso restringido
     description: Necesita estar logueado
     icon: fa fa-ban

@@ -8,7 +8,7 @@ const { accessCss, accessJs } = require('../helpers/error_helper');
 router.get('/access/:num', (req, res, next) => {
   var status = 404;
   var errorNumber = req.params.num;
-  var registeredErrors = ['404', '5051']
+  var registeredErrors = ['404', '5051', '8080', ]
   var lang = 'sp';
   // check if error content is not registered then, default error 404
   if (registeredErrors.indexOf(errorNumber) == -1){
