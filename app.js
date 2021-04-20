@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var logger = require('morgan');
 var boostrap = require('./config/bootstrap');
-var middlewares = require('./config/middlewares');
+var error404 = require('./api/middlewares/error_404');
+var preResponse = require('./api/middlewares/pre_response');
 
 var app = express();
 // express setup
@@ -15,7 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(middlewares.preResponse());
+app.use(preResponse);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
   name: 'session',
@@ -26,7 +27,7 @@ app.use(cookieSession({
 // load controllers
 boostrap(app);
 // custom redirect catch 404 and forward to error handler
-app.use(middlewares.error404());
+app.use(error404);
 // express error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
