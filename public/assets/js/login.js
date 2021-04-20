@@ -1,27 +1,27 @@
 var erraseMessage = () => {
 }
  
-$(document).ready(function() {
+$(document).ready(() => {
   page.base('/login');
-  page('/', function(){
+  page('/', () =>{
     $('#login').show();
     $('#sign-in').hide();
     $('#forgot-password').hide();
     erraseMessage();
   });
-  page('/sign-in', function(){
+  page('/sign-in', () =>{
     $('#login').hide();
     $('#sign-in').show();
     $('#forgot-password').hide();
     erraseMessage();
   });
-  page('/forgot-password', function(){
+  page('/forgot-password', () =>{
     $('#login').hide();
     $('#sign-in').hide();
     $('#forgot-password').show();
     erraseMessage();
   });
-  page('*', function(){
+  page('*', () =>{
     alert('notFound')
   })
   page();
