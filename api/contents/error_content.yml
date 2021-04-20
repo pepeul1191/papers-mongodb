@@ -14,7 +14,7 @@ sp:
     icon: fa fa-ban
     link_message: Ir al Inicio
     link_icon: fa fa-home
-    link_url: ''
+    link_url: 'login'
   csrf:
     message_form: Valor CSRF no coincide
   error_handler:

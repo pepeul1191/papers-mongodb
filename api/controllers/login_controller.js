@@ -4,6 +4,7 @@ var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
 const User = require('../models/user');
+const sessionFalse = require('../middlewares/session_false');
 const { indexCss, indexJs } = require('../helpers/login_helper');
 
 // path = /login
@@ -23,7 +24,7 @@ var index = (req, res, next) => {
   res.render('login/index', locals);
 }
 
-router.get('', index);
+router.get('', sessionFalse, index);
 
 router.post('/', async (req, res, next) => {
   // data
@@ -69,7 +70,7 @@ router.post('/', async (req, res, next) => {
   res.status(status).render('login/index', locals);
 });
 
-router.get('/sign-in', index);
+router.get('/sign-in', sessionFalse, index);
 
 router.post('/sign-in', async (req, res, next) => {
   // data
@@ -131,6 +132,6 @@ router.post('/sign-in', async (req, res, next) => {
   res.status(status).render('login/index', locals);
 });
 
-router.get('/forgot-password', index);
+router.get('/forgot-password', sessionFalse, index);
 
 module.exports = router; 
