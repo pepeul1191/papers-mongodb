@@ -16,3 +16,4 @@ Fuentes:
 
 + https://expressjs.com/es/starter/generator.html
 + https://www.sitepoint.com/understanding-module-exports-exports-node-js/
++ https://getbootstrap.com/docs/4.0/examples/carousel/
