@@ -117,4 +117,26 @@ router.post('/edit', async (req, res, next) => {
   return res.redirect('/carrer?prev=edit-ok');
 });
 
+router.get('/delete', async (req, res, next) => {
+  // data
+  var id = req.query.id;
+  // logic
+  try{
+    carrer = await Carrer.findOne({
+      where: {
+        id: id,
+      }
+    });
+    if(carrer == null){
+      return res.redirect('/error/access/404');
+    }
+    await carrer.destroy();
+  }catch(error){
+    console.log(error);
+    return res.redirect('/carrer?prev=delete-error');
+  } 
+  // response
+  return res.redirect('/carrer?prev=delete-ok');
+});
+
 module.exports = router; 
