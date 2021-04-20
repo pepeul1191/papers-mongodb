@@ -101,8 +101,8 @@ router.post('/sign-in', async (req, res, next) => {
           user: user,
           password: password,
           email: email,
-          activationKey: helpers.randomSN(20),
-          resetKey: helpers.randomSN(20),
+          activationKey: helpers.randomSN(40),
+          resetKey: helpers.randomSN(40),
         });  
         // send activation mail
         
