@@ -1,5 +1,7 @@
 var socketIO = require('socket.io');
-var io = socketIO();
+var io = socketIO({
+  path: '/test',
+});
 var socketApi = {};
 
 socketApi.io = io;

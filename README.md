@@ -19,3 +19,5 @@ Fuentes:
 + https://getbootstrap.com/docs/4.0/examples/carousel/
 + https://libraries.io/bower/socket.io-client
 + https://stackoverflow.com/questions/24609991/using-socket-io-in-express-4-and-express-generators-bin-www
++ https://stackoverflow.com/questions/29511404/connect-to-socket-io-server-with-specific-path-and-namespace
++ https://socket.io/docs/v3/server-api/index.html

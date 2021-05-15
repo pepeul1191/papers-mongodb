@@ -16,7 +16,10 @@
   <script src = "/bower_components/socket.io-client/dist/socket.io.js"></script>
   <script>
     
-    var socket = io.connect('http://localhost:3000/', { 'forceNew': true });
+    var socket = io('http://localhost:3000/', {
+      forceNew: true,
+      path: '/test'
+    });
     console.log(socket)
     socket.on('messages', function(data) {
       console.log(data);
