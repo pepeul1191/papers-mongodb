@@ -32,4 +32,11 @@ router.get('/sign-out', (req, res, next) => {
   res.redirect('/');
 });
 
+
+router.get('/demo/', (req, res, next) => {
+  console.log('XD')
+  req.session = null;
+  res.redirect('/');
+});
+
 module.exports = router; 

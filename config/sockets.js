@@ -1,3 +1,9 @@
+var demoSocket = require('../api/sockets/demo_socket');
+
+module.exports = (server) => {
+  demoSocket.attach(server);
+}
+/*
 var socketIO = require('socket.io');
 var io = socketIO({
   path: '/test',
@@ -19,3 +25,4 @@ socketApi.sendNotification = function() {
 }
 
 module.exports = socketApi;
+*/

@@ -18,7 +18,7 @@
     
     var socket = io('http://localhost:3000/', {
       forceNew: true,
-      path: '/test'
+      path: '/demo'
     });
     console.log(socket)
     socket.on('messages', function(data) {
