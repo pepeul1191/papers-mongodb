@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "bower": "^1.8.12",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "dbmate": "^2.5.0"
   }
 }

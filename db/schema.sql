@@ -1,0 +1,56 @@
+CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(255) primary key);
+CREATE TABLE users (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  user	VARCHAR(45) NOT NULL,
+  password	VARCHAR(45) NOT NULL,
+	email	VARCHAR(45) NOT NULL,
+  image_url VARCHAR(100) NOT NULL
+);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE types (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(20)
+);
+CREATE TABLE generations (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(20)
+);
+CREATE TABLE pokemons (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name	VARCHAR(45),
+  number	INTEGER NOT NULL,
+  weight	FLOAT NOT NULL,
+	height	FLOAT NOT NULL,
+  image_url VARCHAR(100) NOT NULL,
+  generation_id	INTEGER NOT NULL,
+  FOREIGN KEY (generation_id) REFERENCES generations (id)
+);
+CREATE TABLE users_pokemons (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  user_id	INTEGER NOT NULL,
+  pokemon_id	INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (pokemon_id) REFERENCES pokemons (id)
+);
+CREATE TABLE users_followers (
+	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  user_id	INTEGER NOT NULL,
+  follower_id	INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (follower_id) REFERENCES users (id)
+);
+-- Dbmate schema migrations
+INSERT INTO "schema_migrations" (version) VALUES
+  ('20230314232509'),
+  ('20230314233056'),
+  ('20230323162715'),
+  ('20230323162800'),
+  ('20230323163017'),
+  ('20230323163022'),
+  ('20230323163148'),
+  ('20230323163442'),
+  ('20230608011523'),
+  ('20230608011531'),
+  ('20230608011918'),
+  ('20230608011925');

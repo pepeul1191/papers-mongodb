@@ -8,7 +8,7 @@ module.exports = new Sequelize('database', 'username', 'password', {
 		min: 0,
 		idle: 10000
 	},
-	storage: 'db/demo.db',
+	storage: 'db/app.db',
 	define: {
 		timestamps: false // true by default
 	}
