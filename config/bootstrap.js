@@ -4,6 +4,7 @@ var studentController = require('../api/controllers/student_controller');
 var loginController = require('../api/controllers/login_controller');
 var adminController = require('../api/controllers/admin_controller');
 var carrerController = require('../api/controllers/carrer_controller');
+var pokemonController = require('../api/controllers/pokemon_controller');
 var errorController = require('../api/controllers/error_controller');
 
 module.exports = (app) => {
@@ -14,4 +15,5 @@ module.exports = (app) => {
   app.use('/admin', adminController);
   app.use('/carrer', carrerController);
   app.use('/login', loginController);
+  app.use('/pokemon', pokemonController);
 }

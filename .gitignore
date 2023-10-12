@@ -19,3 +19,4 @@ dist
 public/uploads
 public/templates
 tmp
+public/build

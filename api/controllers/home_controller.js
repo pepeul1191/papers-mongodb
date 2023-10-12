@@ -15,7 +15,7 @@ router.get('', (req, res, next) => {
     jss: indexJs(),
     contents: {},
   };
-  res.status(200).render('home/index', locals);
+  res.status(200).render('home/demo', locals);
 });
 
 //router.get('/profile', middlewares.sessionTrue(), function(req, res, next) {
