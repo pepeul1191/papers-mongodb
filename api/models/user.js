@@ -20,6 +20,7 @@ module.exports = db.define('users', {
     type: Sequelize.STRING, 
     allowNull: false,  
   },
+  /*
   activationKey: { 
     type: Sequelize.STRING, 
     allowNull: true,  
@@ -30,4 +31,5 @@ module.exports = db.define('users', {
     allowNull: true,  
     field: 'reset_key'
   },
+  */
 });
