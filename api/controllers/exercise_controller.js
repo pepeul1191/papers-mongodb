@@ -25,4 +25,23 @@ router.get('/list', (req, res, next) => {
     });
 });
 
+router.get('/find', (req, res, next) => {
+  const exerciseId = req.query.exercise_id;
+  Exercise.findOne({
+    where: {
+      id: exerciseId
+    }
+  })
+    .then(record => {
+      if (record) {
+        res.send(JSON.stringify(record)).status(200);
+      } else {
+        res.send('Lista no encontrada').status(404);
+      }
+    })
+    .catch(err => {
+      console.error('Error al seleccionar los registros:', err);
+    });
+});
+
 module.exports = router;
