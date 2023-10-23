@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "538fa382-12a3-4ccb-bdfa-da1663b2d0a7",
+		"name": "backend 2023-II",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30689798"
+	},
+	"item": [
+		{
+			"name": "https://programamovil2023-iiv2.jose-jesusjes13.repl.co/user/validate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user",
+							"value": "20180038",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "default"
+						}
+					]
+				},
+				"url": "https://programamovil2023-iiv2.jose-jesusjes13.repl.co/user/validate"
+			},
+			"response": []
+		},
+		{
+			"name": "canitdad de ejercicios y partes del cuerpo por miembro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://programamovil2023-iiv2.jose-jesusjes13.repl.co/user/exercises_body_parts?member_id=1",
+					"protocol": "https",
+					"host": [
+						"programamovil2023-iiv2",
+						"jose-jesusjes13",
+						"repl",
+						"co"
+					],
+					"path": [
+						"user",
+						"exercises_body_parts"
+					],
+					"query": [
+						{
+							"key": "member_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener partes del cuerpo ejercitadas por miembro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://programamovil2023-iiv2.jose-jesusjes13.repl.co/user/body_parts?member_id=1",
+					"protocol": "https",
+					"host": [
+						"programamovil2023-iiv2",
+						"jose-jesusjes13",
+						"repl",
+						"co"
+					],
+					"path": [
+						"user",
+						"body_parts"
+					],
+					"query": [
+						{
+							"key": "member_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obtener ejercicios por miembro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://programamovil2023-iiv2.jose-jesusjes13.repl.co/user/exercises?member_id=1",
+					"protocol": "https",
+					"host": [
+						"programamovil2023-iiv2",
+						"jose-jesusjes13",
+						"repl",
+						"co"
+					],
+					"path": [
+						"user",
+						"exercises"
+					],
+					"query": [
+						{
+							"key": "member_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
