@@ -26,7 +26,10 @@ router.post('/validate', (req, res, next) => {
     if (user) {
       response.success = true;
       response.message = 'Usuario encontrado';
-      response.data = JSON.stringify({user_id: user.id, member_id: user.member_id});
+      response.data = JSON.stringify({
+        user_id: user.id, 
+        member_id: user.member_id
+      });
       status = 200;
     } else {
       response.message = 'Usuario no encontrado';
