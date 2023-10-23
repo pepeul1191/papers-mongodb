@@ -101,5 +101,24 @@ router.get('/exercise', (req, res, next) => {
     });
 });
 
+router.get('/profile', (req, res, next) => {
+  var userId = req.query.user_id;
+  var sqlQuery = `
+    SELECT U.id AS user_id, U.user, M.names, M.last_names, M.phone, M.email, L.name AS level_name 
+    FROM users U INNER JOIN members M ON U.member_id = M.id 
+    INNER JOIN levels L ON L.id = M.level_id WHERE U.id = ${userId};`;
+  db.query(sqlQuery, { type: db.QueryTypes.SELECT })
+    .then(list=> {
+      if (list) {
+        res.send(JSON.stringify(list[0])).status(200);
+      } else {
+        res.send('Lista no encontrada').status(404);
+      }
+    }).catch(err => {
+      console.error('Error al realizar la consulta:', err);
+      res.send(JSON.stringify(err)).status(501);
+    });
+});
+
 
 module.exports = router;
