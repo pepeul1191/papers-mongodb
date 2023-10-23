@@ -3,6 +3,7 @@
   let pokemons = [];
 
   onMount(() => {    
+    /*
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
       if (this.readyState === 4) {
@@ -20,6 +21,7 @@
     };
     request.open("GET", '/pokemon/list', true);
     request.send(null);
+    */
   });
 </script>
 
