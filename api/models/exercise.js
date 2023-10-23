@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const BodyPart = require('./body_part');
 var db = require('../../config/database');
 
-const Exercise = db.define('excercises', {
+const Exercise = db.define('exercises', {
   id: { 
     type: Sequelize.INTEGER, 
     primaryKey: true, 
