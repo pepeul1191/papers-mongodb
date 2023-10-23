@@ -32,6 +32,16 @@ router.get('/sign-out', (req, res, next) => {
   res.redirect('/');
 });
 
+router.get('/about', (req, res, next) => {
+  var group = [
+    {codigo: 20051191, nombre: 'Pepe Valdivia'},
+    {codigo: 20071191, nombre: 'Yacky Ramirez'},
+    {codigo: 20161191, nombre: 'Sila Esculapia'},
+    {codigo: 20231191, nombre: 'Chicle Pinkerton'},
+  ];
+  res.status(200).send(JSON.stringify(group));
+});
+
 
 router.get('/demo/', (req, res, next) => {
   console.log('XD')
