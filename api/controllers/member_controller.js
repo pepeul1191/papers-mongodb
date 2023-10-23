@@ -81,5 +81,25 @@ router.get('/exercises', (req, res, next) => {
     });
 });
 
+router.get('/exercise', (req, res, next) => {
+  var memberId = req.query.member_id;
+  var exerciseId = req.query.exercise_id;
+  var sqlQuery = `
+    SELECT E.id, E.name, E.image_url, E.video_url, E.description, EM.reps, EM.sets 
+    FROM exercises E INNER JOIN exercises_members EM ON E.id = EM.id
+    WHERE EM.member_id = ${memberId} AND EM.exercise_id = ${exerciseId};`;
+  db.query(sqlQuery, { type: db.QueryTypes.SELECT })
+    .then(list=> {
+      if (list) {
+        res.send(JSON.stringify(list[0])).status(200);
+      } else {
+        res.send('Lista no encontrada').status(404);
+      }
+    }).catch(err => {
+      console.error('Error al realizar la consulta:', err);
+      res.send(JSON.stringify(err)).status(501);
+    });
+});
+
 
 module.exports = router;
