@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "e03d5173-5b61-467b-b7ba-a0774b47d80c",
+		"name": "backend 2023-II",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23055509"
+	},
+	"item": [
+		{
+			"name": "exercise",
+			"item": [
+				{
+					"name": "listar ejercicios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3000/exercise/list"
+					},
+					"response": []
+				},
+				{
+					"name": "listar ejercicios por parte del cuerpo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3000/exercise/list?body_part_id=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise",
+								"list"
+							],
+							"query": [
+								{
+									"key": "body_part_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener un ejercicio",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3000/exercise/find?exercise_id=3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"exercise",
+								"find"
+							],
+							"query": [
+								{
+									"key": "exercise_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "home",
+			"item": [
+				{
+					"name": "obtener integrantes de grupo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3000/about"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member",
+			"item": [
+				{
+					"name": "listar partes del cuerpo ejercitadas de un miembro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/member/body_parts?member_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"member",
+								"body_parts"
+							],
+							"query": [
+								{
+									"key": "member_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener cantidad de partes del cuerpo y cantidad de ejercicos de rutin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/member/exercises_body_parts?member_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"member",
+								"exercises_body_parts"
+							],
+							"query": [
+								{
+									"key": "member_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar ejercicios de un miembro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/member/exercises?member_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"member",
+								"exercises"
+							],
+							"query": [
+								{
+									"key": "member_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener perfil de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/member/profile?user_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"member",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener ejercicio de rutina en un miembro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/member/exercise?member_id=1&exercise_id=50",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"member",
+								"exercise"
+							],
+							"query": [
+								{
+									"key": "member_id",
+									"value": "1"
+								},
+								{
+									"key": "exercise_id",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "body_part",
+			"item": [
+				{
+					"name": "listar partes del cuerpo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:3000/body_part/list"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "validar usuario y contraseña",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "20180038",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "default"
+								}
+							]
+						},
+						"url": "http://localhost:3000/user/validate"
+					},
+					"response": []
+				},
+				{
+					"name": "cambiar contraseña",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dni",
+									"value": "12345678",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "20180038@aloe.ulima.edu.pe",
+									"type": "default"
+								}
+							]
+						},
+						"url": "http://localhost:3000/user/reset_password"
+					},
+					"response": []
+				},
+				{
+					"name": "crear usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dni",
+									"value": "123456753",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "2018008@aloe.ulima.edu.pe",
+									"type": "default"
+								}
+							]
+						},
+						"url": "http://localhost:3000/user/create"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
