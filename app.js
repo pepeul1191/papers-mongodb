@@ -7,6 +7,7 @@ var logger = require('morgan');
 var boostrap = require('./config/bootstrap');
 var error404 = require('./api/middlewares/error_404');
 var preResponse = require('./api/middlewares/pre_response');
+const cors = require('cors');
 
 var app = express();
 // express setup
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(preResponse);
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
   name: 'session',

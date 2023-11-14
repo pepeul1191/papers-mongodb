@@ -16,6 +16,7 @@
     "bootstrap": "^5.2.3",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
@@ -35,10 +36,10 @@
     "svelte-routing": "^1.6.0"
   },
   "devDependencies": {
-    "bower": "^1.8.12",
-    "nodemon": "^2.0.7",
-    "dbmate": "^2.5.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
+    "bower": "^1.8.12",
+    "dbmate": "^2.5.0",
+    "nodemon": "^2.0.7",
     "rollup": "^2.79.1",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-svelte": "^7.1.0",
