@@ -8,6 +8,7 @@ var pokemonController = require('../api/controllers/pokemon_controller');
 var memberController = require('../api/controllers/member_controller');
 var exerciseController = require('../api/controllers/exercise_controller');
 var bodyPartController = require('../api/controllers/body_part_controller');
+var fileController = require('../api/controllers/file_controller');
 var errorController = require('../api/controllers/error_controller');
 
 module.exports = (app) => {
@@ -22,4 +23,5 @@ module.exports = (app) => {
   app.use('/member', memberController);
   app.use('/exercise', exerciseController);
   app.use('/body_part', bodyPartController);
+  app.use('/file', fileController);
 }
