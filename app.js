@@ -5,11 +5,14 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const logger = require('morgan');
 const bootstrap = require('./config/bootstrap');
+const sockets = require('./config/sockets');
 const error404 = require('./api/middlewares/error_404');
 const preResponse = require('./api/middlewares/pre_response');
 const cors = require('cors');
+const expressWs = require('express-ws');
+// init app
 const app = express();
-// express setup
+expressWs(app);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
@@ -27,9 +30,12 @@ app.use(cookieSession({
 }))
 // load controllers and sockets
 bootstrap(app);
-// sockets(app); -> esto está en www/bin
+sockets(app); 
+
+
+
 // custom redirect catch 404 and forward to error handler
-//app.use(error404);
+app.use(error404);
 // express error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -39,5 +45,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-module.exports = app;
+// run app
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+// module.exports = app;

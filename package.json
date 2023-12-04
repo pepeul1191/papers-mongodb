@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node ./bin/www --ignore './public/' --ignore './src/'",
+    "dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node app.js --ignore './public/' --ignore './src/'",
     "bower:install": "node ./node_modules/.bin/bower install",
     "build": "rollup -c",
     "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",
@@ -22,6 +23,7 @@
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "express": "^4.18.2",
+    "express-ws": "^5.0.2",
     "font-awesome": "^4.7.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^9.1.0",
@@ -35,8 +37,7 @@
     "sirv-cli": "^2.0.0",
     "socket.io": "^4.1.1",
     "sqlite3": "^5.0.2",
-    "svelte-routing": "^1.6.0",
-    "ws": "^8.14.2"
+    "svelte-routing": "^1.6.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^14.1.0",
