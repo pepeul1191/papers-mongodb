@@ -1,20 +1,17 @@
-var socketIO = require('socket.io');
-const socketDemoMiddleware = require('../middlewares/demo');
-
-var io = socketIO({
-  path: '/demo',
-});
-
-io.use(function(socket, next) {
-  socketDemoMiddleware(socket.request, socket.request.res, next);
-});
-
-io.on('connection', (socket) => {
-  console.log('A user connected to demo socket');
-
-  socket.on('disconnect', function () {
-    console.log('A user disconnected from demo socket');
- });
-});
-
-module.exports = io;
+module.exports = (ws, req, res, next) => {
+  console.log('Conexión WebSocket establecida');
+  ws.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
+    wss.on('connection', (ws) => {
+      console.log('Conexión WebSocket establecida');
+    
+      ws.on('message', (message) => {
+        console.log(`Mensaje recibido: ${message}`);
+        ws.send('Mensaje recibido por el servidor');
+      });
+    
+      ws.on('close', () => {
+        console.log('Conexión cerrada');
+      });
+    });
+  });
+};

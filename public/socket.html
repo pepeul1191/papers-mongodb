@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket Example</title>
+</head>
+<body>
+  <input type="text" id="messageInput" placeholder="Escribe un mensaje">
+  <button onclick="sendMessage()">Enviar</button>
+  <div id="messages"></div>
+
+  <script>
+    const messagesDiv = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    let ws;
+
+    function connectWebSocket() {
+      // Reemplaza 'ws://localhost:3000/ws' con la dirección de tu servidor WebSocket
+      ws = new WebSocket('ws://localhost:3000/wsss');
+
+      ws.onopen = () => {
+        console.log('Conexión establecida con el servidor');
+      };
+
+      ws.onmessage = (event) => {
+        // Maneja los mensajes recibidos del servidor
+        const message = event.data;
+        messagesDiv.innerHTML += `<p>Servidor dice: ${message}</p>`;
+      };
+
+      ws.onclose = () => {
+        console.log('Conexión cerrada');
+      };
+    }
+
+    function sendMessage() {
+      const message = messageInput.value;
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(message);
+        messagesDiv.innerHTML += `<p>Tú dices: ${message}</p>`;
+        messageInput.value = '';
+      } else {
+        console.log('La conexión no está abierta.');
+      }
+    }
+
+    connectWebSocket();
+  </script>
+</body>
+</html>

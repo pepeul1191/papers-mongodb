@@ -7,8 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
-var sockets = require('../config/sockets');
+const WebSocket = require('ws');
 
+var sockets = require('../config/sockets');
 /**
  * Get port from environment and store in Express.
  */
@@ -21,6 +22,14 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+/**
+ * Create Sockets Endpoints.
+ */
+
+const ws = new WebSocket.Server({ server });
+const clients = new Set();
+sockets(ws, clients);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -38,7 +47,7 @@ var socketApi = require('../config/sockets');
 var io = socketApi.io;
 io.attach(server);
 */
-sockets(server);
+//sockets(server);
 
 /**
  * Normalize a port into a number, string, or false.

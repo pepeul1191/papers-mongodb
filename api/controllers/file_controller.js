@@ -16,6 +16,8 @@ const upload = multer({ dest: "public/uploads/" });
 
 router.post('/upload', upload.array("file"), async (req, res, next) => {
   // data
+  console.log(req.body)
+  console.log(req.files)
   const extension = req.files[0].originalname.split('.').slice(-1)[0];
   const originalPath = req.files[0].path; // Reemplaza con la ruta de tu archivo original
   const newName = req.files[0].filename + '.' + extension; // Nuevo nombre del archivo
@@ -25,7 +27,7 @@ router.post('/upload', upload.array("file"), async (req, res, next) => {
       // response
       res.send('Se subió mal el archivo').status(500);
     }else{
-      res.send(newPath).status(200);
+      res.send(newPath.substring(7)).status(200);
     }
   });
 });

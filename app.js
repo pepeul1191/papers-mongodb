@@ -1,15 +1,14 @@
 // var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var cookieSession = require('cookie-session');
-var logger = require('morgan');
-var boostrap = require('./config/bootstrap');
-var error404 = require('./api/middlewares/error_404');
-var preResponse = require('./api/middlewares/pre_response');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const logger = require('morgan');
+const bootstrap = require('./config/bootstrap');
+const error404 = require('./api/middlewares/error_404');
+const preResponse = require('./api/middlewares/pre_response');
 const cors = require('cors');
-
-var app = express();
+const app = express();
 // express setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,10 +25,11 @@ app.use(cookieSession({
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))
-// load controllers
-boostrap(app);
+// load controllers and sockets
+bootstrap(app);
+// sockets(app); -> esto está en www/bin
 // custom redirect catch 404 and forward to error handler
-app.use(error404);
+//app.use(error404);
 // express error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

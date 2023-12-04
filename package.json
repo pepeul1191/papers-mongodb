@@ -35,7 +35,8 @@
     "sirv-cli": "^2.0.0",
     "socket.io": "^4.1.1",
     "sqlite3": "^5.0.2",
-    "svelte-routing": "^1.6.0"
+    "svelte-routing": "^1.6.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^14.1.0",
