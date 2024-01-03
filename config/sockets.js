@@ -3,6 +3,7 @@ var demoSocket = require('../api/sockets/demo_socket');
 const clients = [];
 
 const broadcast = (message) => {
+  console.log(message)
   clients.forEach(client => {
     client.send(message);
   });

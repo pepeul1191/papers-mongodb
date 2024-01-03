@@ -31,9 +31,6 @@ app.use(cookieSession({
 // load controllers and sockets
 bootstrap(app);
 sockets(app); 
-
-
-
 // custom redirect catch 404 and forward to error handler
 app.use(error404);
 // express error handler
@@ -50,4 +47,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-// module.exports = app;
+//module.exports = app;

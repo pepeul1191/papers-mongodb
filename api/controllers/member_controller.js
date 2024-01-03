@@ -59,7 +59,7 @@ router.get('/exercises', (req, res, next) => {
   var memberId = req.query.member_id;
   var bodyPartId = req.query.body_part_id;
   var sqlQuery = `
-    SELECT E.id, E.name, E.image_url, E.video_url, E.description, E.body_part_id FROM exercises_members EM 
+    SELECT E.id, E.name, E.image_url, E.video_url, E.description, E.body_part_id, EM.sets, EM.reps FROM exercises_members EM 
     INNER JOIN exercises E ON E.id = EM.exercise_id 
     INNER JOIN body_parts BP ON BP.id = E.body_part_id
     WHERE member_id = ${memberId}`;
