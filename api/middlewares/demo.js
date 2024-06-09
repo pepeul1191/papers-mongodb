@@ -1,4 +1,6 @@
-module.exports = (socketReq, socketRes, next) => {
-  console.log('middelware socket')
+const socketMiddleware = (socketReq, socketRes, next) => {
+  console.log('middleware de socket');
   return next();
 };
+
+export default socketMiddleware;

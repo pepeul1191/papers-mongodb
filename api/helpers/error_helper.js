@@ -1,8 +1,8 @@
-var constants = require('../../config/constants')();
+import constants from '../../config/constants.js';
 
 const accessCss = () => {
-  var resp = [];
-  if(constants.static == 'dev'){
+  let resp = [];
+  if (constants.static === 'dev') {
     resp = [
       'bower_components/bootstrap/dist/css/bootstrap.min',
       'bower_components/font-awesome/css/font-awesome.min',
@@ -10,7 +10,7 @@ const accessCss = () => {
       'assets/css/error',
     ];
   }
-  if(constants.static == 'build'){
+  if (constants.static === 'build') {
     resp = [
       'dist/test.min'
     ];
@@ -19,19 +19,17 @@ const accessCss = () => {
 }
 
 const accessJs = () => {
-  var resp = [];
-  if(constants.static == 'dev'){
+  let resp = [];
+  if (constants.static === 'dev') {
     resp = [
       'bower_components/jquery/dist/jquery.min',
       'bower_components/bootstrap/dist/js/bootstrap.min',
     ];
   }
-  if(constants.static == 'build'){
-    resp = [
-    ];
+  if (constants.static === 'build') {
+    resp = [];
   }
   return resp;
 }
 
-exports.accessCss= accessCss;
-exports.accessJs= accessJs;
+export { accessCss, accessJs };

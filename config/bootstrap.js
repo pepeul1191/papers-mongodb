@@ -1,11 +1,13 @@
-var homeController = require('../api/controllers/home_controller');
-var fileController = require('../api/controllers/file_controller');
-var errorController = require('../api/controllers/error_controller');
-var loginController = require('../api/controllers/login_controller');
+import homeController from '../api/controllers/home_controller.js';
+import fileController from '../api/controllers/file_controller.js';
+import errorController from '../api/controllers/error_controller.js';
+import loginController from '../api/controllers/login_controller.js';
+import paperController from '../api/controllers/paper_controller.js';
 
-module.exports = (app) => {
+export default (app) => {
   app.use('/', homeController);
   app.use('/error', errorController);
   app.use('/login', loginController);
   app.use('/file', fileController);
+  app.use('/paper', paperController);
 }

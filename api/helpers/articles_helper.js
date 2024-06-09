@@ -1,3 +1,1 @@
-var constants = require('../../config/constants')();
-
-
+import constants from '../../config/constants.js';

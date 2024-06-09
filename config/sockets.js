@@ -1,9 +1,9 @@
-var demoSocket = require('../api/sockets/demo_socket');
+import demoSocket from '../api/sockets/demo_socket.js';
 
 const clients = [];
 
 const broadcast = (message) => {
-  console.log(message)
+  console.log(message);
   clients.forEach(client => {
     client.send(message);
   });
@@ -17,7 +17,7 @@ const removeClient = (ws) => {
   clients.splice(clients.indexOf(ws), 1);
 }
 
-module.exports = (app) => {  
+export default (app) => {  
   // sockets
   demoSocket('/ws', app, pushClient, removeClient, broadcast);
 }

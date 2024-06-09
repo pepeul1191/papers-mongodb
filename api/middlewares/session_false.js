@@ -1,10 +1,12 @@
-var constants = require('../../config/constants')();
+import constants from '../../config/constants.js';
 
-module.exports = (req, res, next) => {
-  if (constants.session == true){
-    if(req.session.state == 'activate'){
+const sessionFalseMiddleware = (req, res, next) => {
+  if (constants.session === true){
+    if(req.session.state === 'activate'){
       return res.redirect('/');
     }
   }
   return next();
 };
+
+export default sessionFalseMiddleware;

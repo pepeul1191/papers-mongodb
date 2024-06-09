@@ -1,30 +1,26 @@
-var express = require('express');
-var router = express.Router();
-var constants = require('../../config/constants')();
-var helpers = require('../../config/helpers');
-const { getContent, getTitle } = require('../../config/contents');
-const { accessCss, accessJs } = require('../helpers/error_helper');
+import express from 'express';
+const router = express.Router();
+import constants from '../../config/constants.js';
+import { getContent, getTitle } from '../../config/contents.js';
+import { accessCss, accessJs } from '../helpers/error_helper.js';
 
 router.get('/access/:num', (req, res, next) => {
-  var status = 404;
-  var errorNumber = req.params.num;
-  var registeredErrors = ['404', '5051', '8080', ]
-  var lang = 'sp';
+  const status = 404;
+  const errorNumber = req.params.num;
+  const registeredErrors = ['404', '5051', '8080'];
+  const lang = 'sp';
   // check if error content is not registered then, default error 404
-  if (registeredErrors.indexOf(errorNumber) == -1){
-    errorNumber = '404'
-  }
+  const error = registeredErrors.includes(errorNumber) ? errorNumber : '404';
   // response
-  var locals = {
-    constants: constants,
+  const locals = {
+    constants: constants(),
     title: getTitle()[lang]['error'],
-    helpers: helpers,
     csss: accessCss(),
     jss: accessJs(),
-    contents: getContent('error')[lang][errorNumber],
+    contents: getContent('error')[lang][error],
     lang: lang,
   };
-  res.render('error/access', locals);
+  res.render('error', locals);
 });
 
-module.exports = router; 
+export default router;

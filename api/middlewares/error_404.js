@@ -1,17 +1,19 @@
-const { getContent } = require('../../config/contents');
+import { getContent } from '../../config/contents.js';
 
-module.exports = (req, res, next) => {
-  var lang = 'sp';
-  if ('GET' == req.method){
-    var resource = req.path.split('.');
-    var extensions = ['css', 'js', 'png', 'jpg', ];
-    if(extensions.indexOf(resource[resource.length - 1]) == -1){
+const errorHandlerMiddleware = (req, res, next) => {
+  const lang = 'sp';
+  if (req.method === 'GET') {
+    const resource = req.path.split('.');
+    const extensions = ['css', 'js', 'png', 'jpg'];
+    if (extensions.indexOf(resource[resource.length - 1]) === -1) {
       res.redirect('/error/access/404');
-    }else {
+    } else {
       return next();
     }
-  }else{
-    var resp = getContent('error')[lang]['error_handler']['post_404'];
+  } else {
+    const resp = getContent('error')[lang]['error_handler']['post_404'];
     res.status(404).send(resp);
   }
 };
+
+export default errorHandlerMiddleware;

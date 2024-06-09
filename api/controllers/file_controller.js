@@ -1,22 +1,18 @@
-var express = require('express');
-const { Op } = require("sequelize");
-var router = express.Router();
-var constants = require('../../config/constants')();
-var helpers = require('../../config/helpers');
-const sessionFalse = require('../middlewares/session_false');
-const { indexCss, indexJs } = require('../helpers/login_helper');
-const multer = require("multer");
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import constants from '../../config/constants.js';
+import sessionFalse from '../middlewares/session_false.js';
+import { indexCss, indexJs } from '../helpers/login_helper.js';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 
+const router = express.Router();
 const upload = multer({ dest: "public/uploads/" });
-
-// path = /file
 
 router.post('/upload', upload.array("file"), async (req, res, next) => {
   // data
-  console.log(req.body)
-  console.log(req.files)
+  console.log(req.body);
+  console.log(req.files);
   const extension = req.files[0].originalname.split('.').slice(-1)[0];
   const originalPath = req.files[0].path; // Reemplaza con la ruta de tu archivo original
   const newName = req.files[0].filename + '.' + extension; // Nuevo nombre del archivo
@@ -25,10 +21,10 @@ router.post('/upload', upload.array("file"), async (req, res, next) => {
     if (err) {
       // response
       res.send('Se subió mal el archivo').status(500);
-    }else{
+    } else {
       res.send(newPath.substring(7)).status(200);
     }
   });
 });
 
-module.exports = router; 
+export default router;

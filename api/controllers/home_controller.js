@@ -1,52 +1,49 @@
-var express = require('express');
-var router = express.Router();
-var constants = require('../../config/constants')();
-var helpers = require('../../config/helpers');
-const { indexCss, indexJs } = require('../helpers/home_helper');
+import express from 'express';
+const router = express.Router();
+import constants from '../../config/constants.js';
+//import helpers from '../../config/helpers.js';
+import { indexCss, indexJs } from '../helpers/home_helper.js';
 
 router.get('', (req, res, next) => {
   // response
-  var locals = {
+  const locals = {
     constants: constants,
     title: 'Bienvenido',
-    helpers: helpers,
+    //helpers: helpers,
     csss: indexCss(),
     session: req.session,
     jss: indexJs(),
     contents: {},
   };
-  res.status(200).render('home/demo', locals);
+  res.status(200).render('home', locals);
 });
 
-//router.get('/profile', middlewares.sessionTrue(), function(req, res, next) {
 router.get('/profile', (req, res, next) => {
-  body = 'Usuario: ' + req.session.user + '<br>' +
+  const body = 'Usuario: ' + req.session.user + '<br>' +
     'Estado: ' + req.session.state + '<br>' +
     'Momento: ' + req.session.time;
   res.status(200).send(body);
 });
 
-//router.get('/sign-out', middlewares.sessionTrue(), function(req, res, next) {
 router.get('/sign-out', (req, res, next) => {
   req.session = null;
   res.redirect('/');
 });
 
 router.get('/about', (req, res, next) => {
-  var group = [
-    {codigo: 20051191, nombre: 'Pepe Valdivia'},
-    {codigo: 20071191, nombre: 'Yacky Ramirez'},
-    {codigo: 20161191, nombre: 'Sila Esculapia'},
-    {codigo: 20231191, nombre: 'Chicle Pinkerton'},
+  const group = [
+    { codigo: 20051191, nombre: 'Pepe Valdivia' },
+    { codigo: 20071191, nombre: 'Yacky Ramirez' },
+    { codigo: 20161191, nombre: 'Sila Esculapia' },
+    { codigo: 20231191, nombre: 'Chicle Pinkerton' },
   ];
   res.status(200).send(JSON.stringify(group));
 });
 
-
 router.get('/demo/', (req, res, next) => {
-  console.log('XD')
+  console.log('XD');
   req.session = null;
   res.redirect('/');
 });
 
-module.exports = router; 
+export default router;

@@ -1,13 +1,13 @@
-var constants = require('../../config/constants')();
+import constants from '../../config/constants.js';
 
 const indexCss = () => {
-  var resp = [];
-  if(constants.static == 'dev'){
+  let resp = [];
+  if (constants.static === 'dev') {
     resp = [
       'build/bundle',
     ];
   }
-  if(constants.static == 'build'){
+  if (constants.static === 'build') {
     resp = [
       'dist/test.min'
     ];
@@ -16,18 +16,16 @@ const indexCss = () => {
 }
 
 const indexJs = () => {
-  var resp = [];
-  if(constants.static == 'dev'){
+  let resp = [];
+  if (constants.static === 'dev') {
     resp = [
       'build/bundle',
     ];
   }
-  if(constants.static == 'build'){
-    resp = [
-    ];
+  if (constants.static === 'build') {
+    resp = [];
   }
   return resp;
 }
 
-exports.indexCss= indexCss;
-exports.indexJs= indexJs;
+export { indexCss, indexJs };

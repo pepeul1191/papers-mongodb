@@ -1,19 +1,21 @@
-var constants = require('../../config/constants')();
+import constants from '../../config/constants.js';
 
-module.exports = (req, res, next) => {
-  if (constants.session == true){
-    var canContinue = true;
-    if(req.session.state != 'activate'){
+const sessionTrueMiddleware = (req, res, next) => {
+  if (constants.session === true) {
+    let canContinue = true;
+    if (req.session.state !== 'activate') {
       req.session.message = 'Su tiempo de sesión ha terminado';
       canContinue = false;
     }
-    if(req.session.state === undefined){
-      req.session.message = 'Nececita estar logeuado';
+    if (req.session.state === undefined) {
+      req.session.message = 'Necesita estar logueado';
       canContinue = false;
     }
-    if (canContinue == false){
+    if (!canContinue) {
       return res.redirect('/error/access/8080');
     }
   }
   return next();
 };
+
+export default sessionTrueMiddleware;
