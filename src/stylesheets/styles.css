@@ -227,7 +227,12 @@ main{
 }
 
 footer{
+  margin-top: 20px;
     background-color: #f9f9f9;
 }
 
 .sidebar-link{}
+
+.btn, .form-control {
+  border-radius: 0px !important;
+}
