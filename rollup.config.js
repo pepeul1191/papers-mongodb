@@ -3,9 +3,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import css from 'rollup-plugin-css-only';
+import copy from 'rollup-plugin-copy';
 
 const production = !process.env.ROLLUP_WATCH;
-
 
 const Papers = {
 	input: 'src/entries/papers.js',
@@ -20,6 +20,18 @@ const Papers = {
 			compilerOptions: {
 				dev: !production
 			}
+		}),
+        copy({
+			targets: [
+				{ 
+					src: 'node_modules/font-awesome/fonts/*', 
+					dest: 'public/fonts'
+				},
+				{ 
+					src: 'node_modules/bootstrap-icons/font/fonts/*', 
+					dest: 'public/build/fonts'
+				}
+			]
 		}),
 		css({ output: production ?  'papers.min.css' : 'papers.css' }),
 		resolve({

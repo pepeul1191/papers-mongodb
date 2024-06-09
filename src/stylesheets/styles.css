@@ -236,3 +236,7 @@ footer{
 .btn, .form-control {
   border-radius: 0px !important;
 }
+
+.btn > i {
+  margin-right: 5px;
+}
