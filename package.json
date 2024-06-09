@@ -6,6 +6,8 @@
     "start": "node ./bin/www",
     "start:dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node ./bin/www --ignore './public/' --ignore './src/'",
     "dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node app.js --ignore './public/' --ignore './src/'",
+    "dev:server": "node ./node_modules/nodemon/bin/nodemon.js node app.js --ignore './public/' --ignore './src/'",
+    "dev:front": "rollup -c -w",
     "bower:install": "node ./node_modules/.bin/bower install",
     "build": "rollup -c",
     "dbmate:new": "npx dbmate -d \"db/migrations\" -e \"DB\" new ",

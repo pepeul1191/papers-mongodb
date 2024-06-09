@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
-const User = require('../models/user');
+// const User = require('../models/user');
 const sessionFalse = require('../middlewares/session_false');
 const { indexCss, indexJs } = require('../helpers/login_helper');
 
@@ -25,7 +25,7 @@ var index = (req, res, next) => {
 }
 
 router.get('', sessionFalse, index);
-
+/*
 router.post('/', async (req, res, next) => {
   // data
   var user = req.body.user;
@@ -133,5 +133,5 @@ router.post('/sign-in', async (req, res, next) => {
 });
 
 router.get('/forgot-password', sessionFalse, index);
-
+*/
 module.exports = router; 
