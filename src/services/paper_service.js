@@ -34,6 +34,20 @@ export const save = (data) => {
   });
 }
 
+export const deleteOne = (_id) => {
+  return new Promise((resolve, reject) => {
+    const data = {_id: _id};
+    axios.post('/paper/delete', data)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+
 export const fetchAll = () => {
   return new Promise((resolve, reject) => {
     axios.get('/paper/fetch-all')

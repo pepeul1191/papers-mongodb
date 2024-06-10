@@ -1,7 +1,7 @@
 <script>
   import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
-  import { fetchAll } from '../../../services/paper_service';
+  import { fetchAll, deleteOne } from '../../../services/paper_service';
 
   let papers = [];
 
@@ -18,7 +18,14 @@
   });
 
   const deleteDocument = (_id) => {
-    alert(_id);
+    deleteOne(_id)
+      .then(data => {
+        papers = papers.filter(item => item._id !== _id);
+      })
+      .catch(error => {
+        console.error('Error al eliminar:', error);
+        // Manejar el error
+      });
   }
 </script>
 
