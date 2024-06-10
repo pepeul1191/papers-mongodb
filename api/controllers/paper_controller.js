@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 import { dbConnection } from '../../config/database.js';
 
 const router = express.Router();
-const view_routes = ['', '/add'];
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const { _id } = req.body;
@@ -32,6 +32,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+const view_routes = ['', '/add'];
 router.get(view_routes, (req, res, next) => {
   // response
   const locals = {
@@ -41,6 +42,113 @@ router.get(view_routes, (req, res, next) => {
     contents: {},
   };
   res.status(200).render('papers', locals);
+});
+
+router.get('/fetch-all', async (req, res, next) => {
+  try {
+    const { db, client } = await dbConnection();
+    const papersCollection = db.collection('papers');
+    const result = await papersCollection.aggregate([
+      {
+        $lookup: {
+          from: "key_words",
+          localField: "key_words",
+          foreignField: "_id",
+          as: "key_words_data"
+        }
+      },
+      {
+        $project: {
+          _id: { $toString: "$_id" },
+          authors: 1,
+          author_abstract: 1,
+          my_abstract: 1,
+          year: 1,
+          source: 1,
+          source_url: 1,
+          my_ranking: 1,
+          key_words: 1,
+          doi: 1,
+          file_url: 1,
+          created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
+          updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
+          key_words: {
+            $map: {
+              input: "$key_words_data",
+              as: "kw",
+              in: {
+                _id: { $toString: "$$kw._id" },
+                name: "$$kw.name",
+              }
+            }
+          }
+        }
+      }
+    ]).toArray();
+    // save paper
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+router.get('/fetch-one', async(req, res, next) => {
+  const paperId = req.query.paper_id;
+  console.log(paperId)
+  try {
+    const { db, client } = await dbConnection();
+    const papersCollection = db.collection('papers');
+    const result = await papersCollection.aggregate([
+      {
+        $match: { _id: new ObjectId(paperId) }
+      },
+      {
+        $lookup: {
+          from: "key_words",
+          localField: "key_words",
+          foreignField: "_id",
+          as: "key_words_data"
+        }
+      },
+      {
+        $project: {
+          _id: { $toString: "$_id" },
+          authors: 1,
+          author_abstract: 1,
+          my_abstract: 1,
+          year: 1,
+          source: 1,
+          source_url: 1,
+          my_ranking: 1,
+          key_words: 1,
+          doi: 1,
+          file_url: 1,
+          created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
+          updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
+          key_words: {
+            $map: {
+              input: "$key_words_data",
+              as: "kw",
+              in: {
+                _id: { $toString: "$$kw._id" },
+                name: "$$kw.name",
+              }
+            }
+          }
+        }
+      }
+    ]).toArray();
+    // save paper
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
 });
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
