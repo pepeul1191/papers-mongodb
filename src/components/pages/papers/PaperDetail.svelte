@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { save as savePaper } from '../../../services/paper_service';
-  import { fetchOne } from '../../../services/paper_service';
+  import { save as savePaper, } from '../../../services/paper_service';
+  import { fetchOne, uploadPicture as upload } from '../../../services/paper_service';
 
   export let _id = null;
 
@@ -11,6 +11,16 @@
       .replace(/[x]/g, _ => (Math.random() * 16 | 0).toString(16))
       .toLowerCase();
     return oid;
+  };
+
+  let pictures = [];
+
+  let picture = {
+    _id: _id == null ? _generateId() : _id,
+    file: null,
+    url: '',
+    name: '',
+    created: '',
   };
 
   let paper = {
@@ -76,6 +86,32 @@
     } else {
       paper = { ...paper, [name]: value };
     }
+  }
+
+  const pictureChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'file') {
+      picture = { ...picture, [name]: event.target.files[0] }; // Captura el primer archivo seleccionado
+    } else {
+      picture = { ...picture, [name]: value };
+    }
+  }
+
+  const uploadPicture = (event) => {
+    upload(picture)
+      .then(response => {
+        console.log('Respuesta:', response.data);
+        picture._id = response.data._id;
+        picture.url = response.data.url;
+        picture.created = response.data.created;
+        pictures.push(picture);
+        console.log(pictures)
+        pictures = pictures;
+      })
+      .catch(error => {
+        console.error('Error al guardar:', error);
+        // Manejar el error
+      });
   }
 </script>
 
@@ -147,8 +183,41 @@
   </form>
   <hr>
   <h4 class="mb-4">Imagenes</h4>
+  <div class="mb-12">
+    <label for="formFile" class="form-label">Subir Imágen</label>
+    <div class="d-flex align-items-center">
+      <input type="file" class="form-control" id="formFile" name="file" on:change={pictureChange}>
+      <input type="text" class="form-control ms-2" placeholder="Nombre de la imagen" id="pictureName" name="name" value={picture.name} on:input={pictureChange}>
+      <button type="button" class="btn btn-primary ms-2" on:click={uploadPicture}>Subir</button>
+    </div>
+  </div>
+  <div class="mb-12">
+    {#each pictures as picture}
+      <div class="alert alert-secondary picture" role="alert">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <a href="/{picture.url}" target="_blank" rel="noopener noreferrer">
+              <img src="/{picture.url}" alt="{picture.name}" height="50" width="50" />
+            </a>
+          </div>
+          <div class="col">
+            {picture.name}<br>
+            <b>{picture.created}</b>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-secondary text-center">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>
-
+  .picture{
+    border-radius: 0px;
+    margin-top: 15px;
+  }
 </style>

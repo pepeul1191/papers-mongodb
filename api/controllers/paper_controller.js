@@ -145,7 +145,7 @@ router.get('/fetch-one', async(req, res, next) => {
     ]).toArray();
     // save paper
     client.close();
-    console.log(result)
+    //console.log(result)
     // Retorna el ID de la palabra clave insertada o encontrada
     res.status(200).send(result[0]);
   } catch (error) {
@@ -230,7 +230,8 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         doi: doi,
         file_url: generatedFileUrl,
         created: now,
-        updated: now 
+        updated: now,
+        images: [],
       });
     }
     // save paper
@@ -242,5 +243,40 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
+
+router.post('/image/save', upload.single('file'), async (req, res, next) => {
+  try {
+    const { _id, name, file_url, } = req.body;
+    const generatedFileUrl = req.generatedFileUrl;
+    const { db, client } = await dbConnection();
+    // create imagen
+    const images = db.collection('images');
+    const now = new Date();
+    const doc = await images.insertOne({
+      name: name,
+      file_url: generatedFileUrl,
+      created: now 
+    });
+    //console.log(doc);
+    // save paper
+    // update papers images
+    const papers = db.collection('papers');
+    await papers.updateOne(
+      { _id: new ObjectId(_id) },
+      { $push: { images: doc.insertedId } }
+    );
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send({
+      _id: doc.insertedId, 
+      created: now,
+      url: generatedFileUrl,
+    });
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 
 export default router;
