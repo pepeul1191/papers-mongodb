@@ -3,8 +3,10 @@ import axios from 'axios';
 export const save = (data) => {
   const formData = new FormData();
   Object.keys(data).forEach(key => {
-    if (key === 'file') {
+    if (key === 'file' && data[key]) {
       formData.append(key, data[key], data[key].name);
+    } else if (key === 'file' && !data[key]) {
+      formData.append(key, null); // Adjunta null si el archivo es nulo
     } else {
       formData.append(key, data[key]);
     }

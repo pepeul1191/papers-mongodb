@@ -54,15 +54,16 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
     const keyWordsCollection = db.collection('key_words');
     for (const keyWord of keyWords) {
       let doc = await keyWordsCollection.findOne({ name: keyWord });
-      if (!doc) {
+      if (doc === null) {
         doc = await keyWordsCollection.insertOne({ name: keyWord });
       }
       keyWordsIdsArray.push(doc._id);
     }
     // create or update document
     const paperCollection = db.collection('papers');
-    let doc = await keyWordsCollection.findOne({ _id: new ObjectId(_id) });
-    if (!doc) {
+    let doc = await paperCollection.findOne({ _id: new ObjectId(_id) });
+    const now = new Date();
+    if (doc != null) {
       await paperCollection.updateOne(
         { _id: new ObjectId(_id) }, // Filtro para encontrar el documento por _id
         {
@@ -76,7 +77,8 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
             my_ranking: my_ranking,
             key_words: keyWordsIdsArray,
             doi: doi,
-            file_url: generatedFileUrl
+            file_url: generatedFileUrl,
+            updated: now 
           }
         });
     }else{
@@ -91,7 +93,9 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         my_ranking: my_ranking,
         key_words: keyWordsIdsArray,
         doi: doi,
-        file_url: generatedFileUrl
+        file_url: generatedFileUrl,
+        created: now,
+        updated: now 
       });
     }
     // save paper
