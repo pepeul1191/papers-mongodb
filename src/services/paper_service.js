@@ -81,6 +81,18 @@ export const deleteOne = (_id) => {
   });
 }
 
+export const deleteOnePicture = (_id) => {
+  return new Promise((resolve, reject) => {
+    const data = {_id: _id};
+    axios.post('/paper/picture/delete', data)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
 
 export const fetchAll = () => {
   return new Promise((resolve, reject) => {

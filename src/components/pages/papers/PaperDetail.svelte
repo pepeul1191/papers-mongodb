@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { save as savePaper, } from '../../../services/paper_service';
+  import { save as savePaper, deleteOnePicture } from '../../../services/paper_service';
   import { fetchOne, uploadPicture as upload } from '../../../services/paper_service';
 
   export let _id = null;
@@ -121,6 +121,17 @@
         // Manejar el error
       });
   }
+
+  const deletePicture = (_id) => {
+    deleteOnePicture(_id)
+      .then(data => {
+        pictures = pictures.filter(item => item._id !== _id);
+      })
+      .catch(error => {
+        console.error('Error al eliminar:', error);
+        // Manejar el error
+      });
+  };
 </script>
 
 <div class="container mt-1">
@@ -181,7 +192,7 @@
       <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
     </div>
     <div class="mb-12 text-end">
-      <a href="{paper.file_url}" target="_blank" class="btn btn-info">
+      <a href="{paper.file_url}" target="_blank" class="btn btn-secondary">
         <i class="fa fa-picture-o"></i>Ver Documento
       </a>
       <button type="submit" class="btn btn-primary" on:click={save}>
@@ -196,7 +207,9 @@
     <div class="d-flex align-items-center">
       <input type="file" class="form-control" id="formFile" name="file" on:change={pictureChange}>
       <input type="text" class="form-control ms-2" placeholder="Nombre de la imagen" id="pictureName" name="name" value={picture.name} on:input={pictureChange}>
-      <button type="button" class="btn btn-primary ms-2" on:click={uploadPicture}>Subir</button>
+      <button type="button" class="btn btn-primary ms-3" on:click={uploadPicture}>
+        <i class="fa fa-upload"></i>Subir
+      </button>
     </div>
   </div>
   <div class="mb-12">
@@ -210,10 +223,10 @@
           </div>
           <div class="col">
             {picture.name}<br>
-            <b>{picture.created}</b>
+            <sub><b>{picture.created}</b></sub>
           </div>
           <div class="col-auto">
-            <button class="btn btn-secondary d-flex justify-content-center align-items-center">
+            <button class="btn justify-content-center align-items-center" on:click={deletePicture(picture._id)}>
               <i class="fa fa-times"></i>
             </button>
           </div>
