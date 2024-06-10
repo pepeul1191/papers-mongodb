@@ -115,6 +115,14 @@ router.get('/fetch-one', async(req, res, next) => {
         }
       },
       {
+        $lookup: {
+          from: "images",
+          localField: "images",
+          foreignField: "_id",
+          as: "images_data"
+        }
+      },
+      {
         $project: {
           _id: { $toString: "$_id" },
           authors: 1,
@@ -137,6 +145,19 @@ router.get('/fetch-one', async(req, res, next) => {
               in: {
                 _id: { $toString: "$$kw._id" },
                 name: "$$kw.name",
+              }
+            }
+          },
+          images: {
+            $map: {
+              input: "$images_data",
+              as: "kw",
+              in: {
+                _id: { $toString: "$$kw._id" },
+                name: "$$kw.name",
+                created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$$kw.created", timezone: "-05:00" } },
+                url: "$$kw.file_url",
+                // Agrega aquí los campos adicionales de key_words si los hay
               }
             }
           }

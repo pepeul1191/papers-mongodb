@@ -56,6 +56,7 @@
           paper.doi = data.doi;
           paper.file = data.file;
           paper.file_url = `/${data.file_url}`;
+          pictures = data.images;
         })
         .catch(error => {
           console.error('Error al guardar:', error);
@@ -107,6 +108,13 @@
         pictures.push(picture);
         console.log(pictures)
         pictures = pictures;
+        pictue = {
+          _id:  _generateId() ,
+          file: null,
+          url: '',
+          name: '',
+          created: '',
+        };
       })
       .catch(error => {
         console.error('Error al guardar:', error);
@@ -205,7 +213,7 @@
             <b>{picture.created}</b>
           </div>
           <div class="col-auto">
-            <button class="btn btn-secondary text-center">
+            <button class="btn btn-secondary d-flex justify-content-center align-items-center">
               <i class="fa fa-times"></i>
             </button>
           </div>

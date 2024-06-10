@@ -38,6 +38,7 @@ db.papers.aggregate([
       authors: 1,
       author_abstract: 1,
       my_abstract: 1,
+      name: 1,
       year: 1,
       source: 1,
       source_url: 1,
@@ -45,8 +46,6 @@ db.papers.aggregate([
       key_words: 1,
       doi: 1,
       file_url: 1,
-      //updated: 1,
-      //created: 1,
       created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
       updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
       // Agrega aquí todos los campos necesarios que no deseas cambiar
@@ -66,7 +65,7 @@ db.papers.aggregate([
 ]);
 ```
 
-Listar todos los papers:
+Traer un paper por id:
 
 ```javascript
 db.papers.aggregate([
@@ -82,6 +81,14 @@ db.papers.aggregate([
     }
   },
   {
+    $lookup: {
+      from: "images",
+      localField: "images",
+      foreignField: "_id",
+      as: "images_data"
+    }
+  },
+  {
     $project: {
       _id: { $toString: "$_id" },
       authors: 1,
@@ -94,8 +101,8 @@ db.papers.aggregate([
       key_words: 1,
       doi: 1,
       file_url: 1,
-      //updated: 1,
-      //created: 1,
+      images: 1,
+      name: 1,
       created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
       updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
       // Agrega aquí todos los campos necesarios que no deseas cambiar
@@ -106,6 +113,19 @@ db.papers.aggregate([
           in: {
             _id: { $toString: "$$kw._id" },
             name: "$$kw.name",
+            // Agrega aquí los campos adicionales de key_words si los hay
+          }
+        }
+      },
+      images: {
+        $map: {
+          input: "$images_data",
+          as: "kw",
+          in: {
+            _id: { $toString: "$$kw._id" },
+            name: "$$kw.name",
+            created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$$kw.created", timezone: "-05:00" } },
+            url: "$$kw.file_surl",
             // Agrega aquí los campos adicionales de key_words si los hay
           }
         }
