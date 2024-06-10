@@ -21,6 +21,37 @@ const Papers = {
 				dev: !production
 			}
 		}),
+    copy({
+			targets: []
+		}),
+		css({ output: production ?  'papers.min.css' : 'papers.css' }),
+		resolve({
+			browser: true,
+			dedupe: ['svelte'],
+			exportConditions: ['svelte']
+		}),
+		commonjs(),
+		production && terser()
+	],
+	watch: {
+		clearScreen: false
+	}
+};
+
+const Vendors = {
+	input: 'src/entries/vendors.js',
+	output: {
+		sourcemap: true,
+		format: 'iife',
+		name: 'vendors',
+		file: production ? 'public/dist/vendors.min.js' : 'public/dist/vendors.js',
+	},
+	plugins: [
+		svelte({
+			compilerOptions: {
+				dev: false
+			}
+		}),
         copy({
 			targets: [
 				{ 
@@ -33,7 +64,7 @@ const Papers = {
 				}
 			]
 		}),
-		css({ output: production ?  'papers.min.css' : 'papers.css' }),
+		css({ output: 'vendors.min.css' }),
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],
@@ -134,4 +165,4 @@ const Web = {
 export default [App, Web, Access, ];
 */
 
-export default [Papers, ];
+export default [Papers, Vendors];
