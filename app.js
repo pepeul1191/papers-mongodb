@@ -17,15 +17,16 @@ const app = express();
 expressWs(app);
 console.log(path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
-app.set('views', 'C:\\desarrollo\\papers2\\views');
+//app.set('views', 'C:\\desarrollo\\papers2\\views');
+app.set('views', path.join(__dirname, 'views'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(preResponse);
 app.use(cors());
-//app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('C:\\desarrollo\\papers2\\public'));
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static('C:\\desarrollo\\papers2\\public'));
 
 app.use(cookieSession({
   name: 'session',

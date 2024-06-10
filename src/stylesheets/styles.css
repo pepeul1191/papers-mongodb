@@ -240,3 +240,8 @@ footer{
 .btn > i {
   margin-right: 5px;
 }
+
+.btn-button{
+  margin-right: 5px;
+  color: black;
+}

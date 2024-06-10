@@ -1,6 +1,9 @@
 <script>
-  import { navigate } from 'svelte-routing';  
-  import { save as savePaper } from '../../services/paper_service';
+  import { onMount } from 'svelte';
+  import { save as savePaper } from '../../../services/paper_service';
+  import { fetchOne } from '../../../services/paper_service';
+
+  export let _id = null;
 
   const _generateId = () => {
     const timestamp = (new Date().getTime() / 1000 | 0).toString(16);
@@ -11,26 +14,52 @@
   };
 
   let paper = {
-    _id: _generateId(),
-    authors: 'Zhang R.; Xiong K.; Du H.; Niyato D.; Kang J.; Shen X.; Vincent Poor H.',
-    name: 'Generative AI-enabled Vehicular Networks: Fundamentals, Framework, and Case Study',
-    author_abstract: 'Recognizing the tremendous improvements that the integration of generative AI can bring to intelligent transportation systems, this article explores the integration of generative AI technologies in vehicular networks, focusing on their potential applications and challenges. Generative AI, with its capabilities of generating realistic data and facilitating advanced decision-making processes, enhances various applications when combined with vehicular networks, such as navigation optimization, traffic prediction, data generation, and evaluation. Despite these promising applications, the integration of generative AI with vehicular networks faces several challenges, such as real-time data processing and decision-making, adapting to dynamic and unpredictable environments, as well as privacy and security concerns. To address these challenges, we propose a multi-modality semanticaware framework to enhance the service quality of generative AI. By leveraging multi-modal and semantic communication technologies, the framework enables the use of text and image data for creating multi-modal content, providing more reliable guidance to receiving vehicles and ultimately improving system usability and efficiency. To further improve the reliability and efficiency of information transmission and reconstruction within the framework, taking generative AI-enabled vehicle-to-vehicle (V2V) as a case study, a deep reinforcement learning (DRL)-based approach is proposed for resource allocation. Finally, we discuss potential research directions and anticipated advancements in the field of generative AI-enabled vehicular networks. IEEE',
-    my_abstract: 'Consumers emotional and cognitive attachment to product design plays a pivotal role in influencing purchasing choices. Therefore, product designers incorporate this signal as they develop new products. The goal of our work is to reduce the psychological distance between designers and consumers in the automotive concept design process. While generative AI models hold the potential to amplify creativity, these models do not have any of this specialized knowledge. In this work, we developed a novel framework and system that combines machine learning, human aesthetic assessments, and visualization to support designers in organizing a large space of automotive wheel designs. We present a case study with 10 automotive designers using the tool to inspire novel wheel designs and end with a discussion of use cases and design implications for using this framework to support professional product design practice. © 2024 Owner/Author.',
-    year: 2024,
-    source: 'Scopus',
-    source_url: 'https://www.scopus.com/inward/record.uri?eid=2-s2.0-85191231324&doi=10.1109%2fMNET.2024.3391767&partnerID=40&md5=dcb5a13aa666a943d547a8379511b5b4',
-    my_ranking: 4,
-    key_words: ['Accidents', 'Data models', 'DRL', 'Generative AI', 'generative AI', 'multi-modal', 'Navigation', 'Predictive models', 'Reliability', 'Training', 'Vehicular networks'],
-    doi: '10.1109/MNET.2024.3391767',
-    file: null, 
+    _id: _id == null ? _generateId() : _id,
+    authors: '',
+    name: '',
+    author_abstract: '',
+    my_abstract: '',
+    year: null,
+    source: '',
+    source_url: '',
+    my_ranking: 0,
+    key_words: [],
+    doi: '',
+    file: null,
+    file_url: '',
   };
+
+  onMount(() => {
+    if(_id != null){
+      fetchOne(_id)
+        .then((data) => {
+          console.log('Respuesta:', data);
+          paper.name = data.name;
+          paper.authors = data.authors;
+          paper.author_abstract = data.author_abstract;
+          paper.my_abstract = data.my_abstract;
+          paper.year = data.year;
+          paper.source = data.source;
+          paper.source_url = data.source_url;
+          paper.my_ranking = data.my_ranking;
+          paper.key_words =  data.key_words.map(item => item.name);
+          paper.doi = data.doi;
+          paper.file = data.file;
+          paper.file_url = `/${data.file_url}`;
+        })
+        .catch(error => {
+          console.error('Error al guardar:', error);
+          // Manejar el error
+        });
+    }
+   });
   
   const save = (event) => {
     event.preventDefault();
     savePaper(paper)
       .then(response => {
         console.log('Respuesta:', response.data);
-        // Hacer algo con la respuesta
+        paper.file_url = response.data;
       })
       .catch(error => {
         console.error('Error al guardar:', error);
@@ -38,7 +67,7 @@
       });
   }
 
-  function formChange(event) {
+  const formChange = (event) => {
     const { name, value } = event.target;
     if (name === 'file') {
       paper = { ...paper, [name]: event.target.files[0] }; // Captura el primer archivo seleccionado
@@ -108,8 +137,11 @@
       <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
     </div>
     <div class="mb-12 text-end">
+      <a href="{paper.file_url}" target="_blank" class="btn btn-info">
+        <i class="fa fa-picture-o"></i>Ver Documento
+      </a>
       <button type="submit" class="btn btn-primary" on:click={save}>
-        <i class="fa fa-envelope"></i>Guardar Cambios
+        <i class="fa fa-check"></i>Guardar Cambios
       </button>
     </div>
   </form>

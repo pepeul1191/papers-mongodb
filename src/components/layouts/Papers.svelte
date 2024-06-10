@@ -4,6 +4,7 @@
   import { navigate } from 'svelte-routing';
   import ArticleList from '../pages/papers/PaperList.svelte';
   import ArticleDetail from '../pages/papers/PaperDetail.svelte';
+  import PaperDetail from '../pages/papers/PaperDetail.svelte';
   export let basepath = '/paper';
   
   onMount(() => {
@@ -41,6 +42,9 @@
   <Router basepath="{basepath}">
     <Route path="/" component={ArticleList} />
     <Route path="/add" component={ArticleDetail} />
+    <Route path="/edit/:_id" let:params>
+      <PaperDetail _id={params._id} />
+    </Route>
   </Router>
   
   <footer class="bg-dark text-white pt-4">

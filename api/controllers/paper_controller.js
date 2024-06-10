@@ -26,13 +26,13 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const { _id } = req.body;
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    req.generatedFileUrl = 'public/uploads/' + _id + '/' + uniqueSuffix + '-' + file.originalname;
+    req.generatedFileUrl = 'uploads/' + _id + '/' + uniqueSuffix + '-' + file.originalname;
     cb(null, uniqueSuffix + '-' + file.originalname); // Ensure a unique filename
   }
 });
 const upload = multer({ storage: storage });
 
-const view_routes = ['', '/add'];
+const view_routes = ['', '/add', '/edit/:_id'];
 router.get(view_routes, (req, res, next) => {
   // response
   const locals = {
@@ -63,6 +63,7 @@ router.get('/fetch-all', async (req, res, next) => {
           authors: 1,
           author_abstract: 1,
           my_abstract: 1,
+          name: 1,
           year: 1,
           source: 1,
           source_url: 1,
@@ -96,7 +97,7 @@ router.get('/fetch-all', async (req, res, next) => {
 });
 
 router.get('/fetch-one', async(req, res, next) => {
-  const paperId = req.query.paper_id;
+  const paperId = req.query._id;
   console.log(paperId)
   try {
     const { db, client } = await dbConnection();
@@ -119,6 +120,7 @@ router.get('/fetch-one', async(req, res, next) => {
           authors: 1,
           author_abstract: 1,
           my_abstract: 1,
+          name: 1,
           year: 1,
           source: 1,
           source_url: 1,
@@ -143,8 +145,9 @@ router.get('/fetch-one', async(req, res, next) => {
     ]).toArray();
     // save paper
     client.close();
+    console.log(result)
     // Retorna el ID de la palabra clave insertada o encontrada
-    res.status(200).send(result);
+    res.status(200).send(result[0]);
   } catch (error) {
     console.error('Error al manejar la solicitud:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
@@ -176,6 +179,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         { _id: new ObjectId(_id) }, // Filtro para encontrar el documento por _id
         {
           $set: {
+            name: name,
             authors: authors,
             author_abstract: author_abstract,
             my_abstract: my_abstract,
@@ -192,6 +196,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
     }else{
       await paperCollection.insertOne({
         _id: new ObjectId(_id),
+        name: name,
         authors: authors,
         author_abstract: author_abstract,
         my_abstract: my_abstract,
@@ -209,7 +214,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
     // save paper
     client.close();
     // Retorna el ID de la palabra clave insertada o encontrada
-    res.status(200).send('XD');
+    res.status(200).send(generatedFileUrl);
   } catch (error) {
     console.error('Error al manejar la solicitud:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
