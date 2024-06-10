@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const save = (data) => {
-  alert();
   const formData = new FormData();
   Object.keys(data).forEach(key => {
     if (key === 'file') {
@@ -10,6 +9,7 @@ export const save = (data) => {
       formData.append(key, data[key]);
     }
   });
+  console.log(formData);
   // send
   return new Promise((resolve, reject) => {
     axios.post('/paper/save', formData, {

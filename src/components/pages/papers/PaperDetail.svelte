@@ -2,8 +2,16 @@
   import { navigate } from 'svelte-routing';  
   import { save as savePaper } from '../../services/paper_service';
 
+  const _generateId = () => {
+    const timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+    const oid = timestamp + 'xxxxxxxxxxxxxxxx'
+      .replace(/[x]/g, _ => (Math.random() * 16 | 0).toString(16))
+      .toLowerCase();
+    return oid;
+  };
+
   let paper = {
-    _id: 'E',
+    _id: _generateId(),
     authors: 'Zhang R.; Xiong K.; Du H.; Niyato D.; Kang J.; Shen X.; Vincent Poor H.',
     name: 'Generative AI-enabled Vehicular Networks: Fundamentals, Framework, and Case Study',
     author_abstract: 'Recognizing the tremendous improvements that the integration of generative AI can bring to intelligent transportation systems, this article explores the integration of generative AI technologies in vehicular networks, focusing on their potential applications and challenges. Generative AI, with its capabilities of generating realistic data and facilitating advanced decision-making processes, enhances various applications when combined with vehicular networks, such as navigation optimization, traffic prediction, data generation, and evaluation. Despite these promising applications, the integration of generative AI with vehicular networks faces several challenges, such as real-time data processing and decision-making, adapting to dynamic and unpredictable environments, as well as privacy and security concerns. To address these challenges, we propose a multi-modality semanticaware framework to enhance the service quality of generative AI. By leveraging multi-modal and semantic communication technologies, the framework enables the use of text and image data for creating multi-modal content, providing more reliable guidance to receiving vehicles and ultimately improving system usability and efficiency. To further improve the reliability and efficiency of information transmission and reconstruction within the framework, taking generative AI-enabled vehicle-to-vehicle (V2V) as a case study, a deep reinforcement learning (DRL)-based approach is proposed for resource allocation. Finally, we discuss potential research directions and anticipated advancements in the field of generative AI-enabled vehicular networks. IEEE',
@@ -61,7 +69,7 @@
       </div>
       <div class="col-md-5">
         <label for="txtSoruceUrl" class="form-label">Fuente URL</label>
-        <input type="text" class="form-control" id="txtSoruceUrl" name="doi" value={paper.source_url} on:input={formChange}>
+        <input type="text" class="form-control" id="txtSoruceUrl" name="source_url" value={paper.source_url} on:input={formChange}>
       </div>
       <div class="col-md-3">
         <label for="txtDoi" class="form-label">DOI</label>
