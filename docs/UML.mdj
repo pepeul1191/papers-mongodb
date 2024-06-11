@@ -585,7 +585,7 @@
 											"top": 353,
 											"width": 169.46044921875,
 											"height": 13,
-											"text": "+key_words: Array[KeyWord]",
+											"text": "+key_words: Array[ObjectId]",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2214,7 +2214,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGP/ey1xsVvKFU="
 							},
-							"name": "my_abstract"
+							"name": "my_abstract",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2295,7 +2296,7 @@
 								"$ref": "AAAAAAGP/ey1xsVvKFU="
 							},
 							"name": "key_words",
-							"type": "Array[KeyWord]"
+							"type": "Array[ObjectId]"
 						},
 						{
 							"_type": "UMLAttribute",

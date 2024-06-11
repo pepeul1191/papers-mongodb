@@ -24,6 +24,8 @@ const storage = multer.diskStorage({
     });
   },
   filename: function (req, file, cb) {
+    console.log('1 ++++++++++++++++++++');
+    console.log(req.body.file)
     const { _id } = req.body;
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     req.generatedFileUrl = 'uploads/' + _id + '/' + uniqueSuffix + '-' + file.originalname;
@@ -131,6 +133,7 @@ router.get('/fetch-one', async(req, res, next) => {
           name: 1,
           year: 1,
           source: 1,
+          file_url: 1,
           source_url: 1,
           my_ranking: 1,
           key_words: 1,
@@ -219,8 +222,10 @@ router.post('/picture/delete', async (req, res, next) => {
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
   try {
-    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file } = req.body;
-    const generatedFileUrl = req.generatedFileUrl;
+    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url } = req.body;
+    console.log(file_url);
+    const generatedFileUrl = file == null ? req.generatedFileUrl : file_url;
+    console.log(generatedFileUrl);
     const { db, client } = await dbConnection();
     // generate key words array of object ids
     let keyWordsIdsArray = [];
@@ -230,8 +235,10 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
       let doc = await keyWordsCollection.findOne({ name: keyWord });
       if (doc === null) {
         doc = await keyWordsCollection.insertOne({ name: keyWord });
+        keyWordsIdsArray.push(doc.insertedId);
+      }else{
+        keyWordsIdsArray.push(doc._id);
       }
-      keyWordsIdsArray.push(doc._id);
     }
     // create or update document
     const paperCollection = db.collection('papers');

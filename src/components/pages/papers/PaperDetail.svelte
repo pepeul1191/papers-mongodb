@@ -55,7 +55,7 @@
           paper.key_words =  data.key_words.map(item => item.name);
           paper.doi = data.doi;
           paper.file = data.file;
-          paper.file_url = `/${data.file_url}`;
+          paper.file_url = `${data.file_url}`;
           pictures = data.images;
         })
         .catch(error => {
@@ -192,7 +192,7 @@
       <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
     </div>
     <div class="mb-12 text-end">
-      <a href="{paper.file_url}" target="_blank" class="btn btn-secondary">
+      <a href="/{paper.file_url}" target="_blank" class="btn btn-secondary">
         <i class="fa fa-picture-o"></i>Ver Documento
       </a>
       <button type="submit" class="btn btn-primary" on:click={save}>
