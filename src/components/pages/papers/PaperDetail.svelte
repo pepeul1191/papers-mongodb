@@ -13,6 +13,20 @@
     return oid;
   };
 
+  const createReference = (event) => {
+    event.preventDefault();
+    const reference = `${paper.authors}. ${paper.name}. ${paper.source}, ${paper.year}. DOI: ${paper.doi}`;
+    navigator.clipboard.writeText(reference)
+    .then(function() {
+      console.log('Referencia al portapapeles: ' + reference);
+      alert('¡Referencia al portapapeles!');
+    })
+    .catch(function(err) {
+      console.error('Error al intentar copiar al portapapeles: ', err);
+      alert('¡Error al intentar copiar al portapapeles!');
+    });
+  }
+
   let pictures = [];
 
   let picture = {
@@ -192,8 +206,11 @@
       <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
     </div>
     <div class="mb-12 text-end">
+      <button class="btn btn-info" on:click={createReference}>
+        <i class="fa fa-id-card-o" aria-hidden="true"></i>Copiar Referencia
+      </button>
       <a href="/{paper.file_url}" target="_blank" class="btn btn-secondary">
-        <i class="fa fa-picture-o"></i>Ver Documento
+        <i class="fa fa-file"></i>Ver Documento
       </a>
       <button type="submit" class="btn btn-primary" on:click={save}>
         <i class="fa fa-check"></i>Guardar Cambios

@@ -53,10 +53,10 @@
           <td>{paper.my_ranking}</td>
           <td style="text-align: center;">
             <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={() => {navigate(`/paper/edit/${paper._id}`)}}>
-              <i class="fa fa-pencil"></i>
+              <i class="fa fa-search"></i>
             </a>
             <a class="btn-button" href="{paper.file_url}" target="_blank">
-              <i class="fa fa-picture-o"></i>
+              <i class="fa fa-file"></i>
             </a>
             <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={deleteDocument(paper._id)}>
               <i class="fa fa-times"></i>
