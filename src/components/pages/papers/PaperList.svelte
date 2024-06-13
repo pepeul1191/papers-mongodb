@@ -43,7 +43,12 @@
 </script>
 
 <div class="container mt-4">
-  <h5 class="mb-4">Lista de Artículos</h5>
+  {#if topic_id == null}
+    <h5 class="mb-4">Lista de Todos los Artículos</h5>
+  {:else}
+  <h5 class="mb-4">Lista de los Artículos del Tópico</h5>
+  {/if}
+  <hr>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -68,7 +73,7 @@
             <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={() => {navigate(`/paper/edit/${paper._id}`)}}>
               <i class="fa fa-pencil"></i>
             </a>
-            <a class="btn-button" href="{paper.file_url}" target="_blank">
+            <a class="btn-button" href="/{paper.file_url}" target="_blank">
               <i class="fa fa-search"></i>
             </a>
             <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={deleteDocument(paper._id)}>
@@ -80,9 +85,15 @@
     </tbody>
   </table>
   <div class="mb-12 text-end">
-    <a class="btn btn-primary" href="`/topic/${topic_id}/paper/add`" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic_id}/paper/add`)}}>
-      <i class="fa fa-plus"></i>Agregar Paper
-    </a>
+    {#if topic_id == null}
+      <a class="btn btn-primary" href="/paper/add" aria-current="page" on:click|preventDefault={() => {navigate('/paper/add')}}>
+        <i class="fa fa-plus"></i>Agregar Paper
+      </a>
+    {:else}
+      <a class="btn btn-primary" href={`/topic/${topic_id}/paper/add`} aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic_id}/paper/add`)}}>
+        <i class="fa fa-plus"></i>Agregar Paper
+      </a>
+    {/if}
   </div>
 </div>
 

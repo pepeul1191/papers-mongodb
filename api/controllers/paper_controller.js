@@ -84,46 +84,39 @@ router.get('/fetch-all', async (req, res, next) => {
   }
 });
 
-router.get('/fetch-by-topicxdddd', async (req, res, next) => {
-  const paperId = req.query.topic_id;
+router.get('/fetch-by-topic', async (req, res, next) => {
+  const topicId = req.query.topic_id;
   try {
     const { db, client } = await dbConnection();
-    const papersCollection = db.collection('papers');
-    const result = await papersCollection.aggregate([
+    const topics = db.collection('topics');
+    const result = await topics.aggregate([
+      {
+        $match: { _id: new ObjectId(topicId) }
+      },
       {
         $lookup: {
-          from: "key_words",
-          localField: "key_words",
+          from: "papers",
+          localField: "papers",
           foreignField: "_id",
-          as: "key_words_data"
+          as: "papers"
         }
+      },
+      {
+        $unwind: "$papers"
+      },
+      {
+        $replaceRoot: { newRoot: "$papers" }
       },
       {
         $project: {
           _id: { $toString: "$_id" },
           authors: 1,
-          author_abstract: 1,
-          my_abstract: 1,
           name: 1,
           year: 1,
           source: 1,
-          source_url: 1,
+          year: 1,
           my_ranking: 1,
-          key_words: 1,
-          doi: 1,
           file_url: 1,
-          created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
-          updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
-          key_words: {
-            $map: {
-              input: "$key_words_data",
-              as: "kw",
-              in: {
-                _id: { $toString: "$$kw._id" },
-                name: "$$kw.name",
-              }
-            }
-          }
         }
       }
     ]).toArray();
@@ -142,8 +135,8 @@ router.get('/fetch-one', async(req, res, next) => {
   console.log(paperId)
   try {
     const { db, client } = await dbConnection();
-    const papersCollection = db.collection('papers');
-    const result = await papersCollection.aggregate([
+    const papers = db.collection('papers');
+    const result = await papers.aggregate([
       {
         $match: { _id: new ObjectId(paperId) }
       },
@@ -301,15 +294,22 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         images: [],
       });
       // update topics with the new paper id
-      const topics = db.collection('topics');
-      await topics.updateOne(
-        { _id: new ObjectId(topic_id) },
-        { $push: { 
-          articles: document.insertedId 
+      console.log('1 +++++++++++++++++++++++++++')
+      console.log(topic_id);
+      console.log('2 +++++++++++++++++++++++++++')
+      if(topic_id != null){
+        const topics = db.collection('topics');
+        await topics.updateOne(
+          { _id: new ObjectId(topic_id) },
+          { $push: { 
+              papers: document.insertedId 
+            },
+            $set: { 
+              updated: now 
+            }
           },
-          updated: now, 
-        }
-      )
+        );
+      }
     }
     // save paper
     client.close();

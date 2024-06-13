@@ -78,7 +78,7 @@
           <th>Nombre</th>
           <th>Creado</th>
           <th>Editado</th>
-          <th>Artículos</th>
+          <th style="text-align: center;">Artículos</th>
           <th>Operaciones</th>
         </tr>
       </thead>
@@ -88,7 +88,7 @@
       <td>{topic.name}</td>
       <td>{topic.created}</td>
       <td>{topic.updated}</td>
-      <td>{topic.articles}</td>
+      <td style="text-align: center;">{topic.papers}</td>
       <td style="padding-left: 40px;">
         <a class="btn-button" href="/topic/${topic._id}/paper" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/paper`)}}>
           <i class="fa fa-file"></i>
