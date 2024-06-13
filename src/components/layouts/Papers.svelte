@@ -2,12 +2,11 @@
   import { onMount } from 'svelte';
   import { Router, Route } from 'svelte-routing';
   import { navigate } from 'svelte-routing';
-  import ArticleList from '../pages/papers/PaperList.svelte';
-  import ArticleDetail from '../pages/papers/PaperDetail.svelte';
+  import PaperList from '../pages/papers/PaperList.svelte';
   import PaperDetail from '../pages/papers/PaperDetail.svelte';
   import Home from '../pages/papers/Home.svelte';
   import Contact from '../pages/papers/Contact.svelte';
-  import Topic from '../pages/papers/Topic.svelte';
+  import TopicList from '../pages/papers/TopicList.svelte';
   export let basepath = '/';
   
   onMount(() => {
@@ -48,9 +47,15 @@
   <Router basepath="{basepath}">
     <Route path="/" component={Home} />
     <Route path="/contact" component={Contact} />
-    <Route path="/topic" component={Topic} />
-    <Route path="/paper" component={ArticleList} />
-    <Route path="/paper/add" component={ArticleDetail} />
+    <Route path="/topic" component={TopicList} />
+    <Route path="/topic/:_id/paper" let:params>
+      <PaperList topic_id={params._id} />
+    </Route>
+    <Route path="/topic/:_id/paper/add" let:params>
+      <PaperDetail topic_id={params._id} />
+    </Route>
+    <Route path="/paper" component={PaperList} />
+    <Route path="/paper/add" component={PaperDetail} />
     <Route path="/paper/edit/:_id" let:params>
       <PaperDetail _id={params._id} />
     </Route>

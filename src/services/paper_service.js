@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const save = (data) => {
+export const save = (data, topicId) => {
   const formData = new FormData();
   Object.keys(data).forEach(key => {
     if (key === 'file' && data[key]) {
@@ -11,7 +11,8 @@ export const save = (data) => {
       formData.append(key, data[key]);
     }
   });
-  console.log(formData);
+  formData.append('topic_id', topicId);
+  //console.log(formData);
   // send
   return new Promise((resolve, reject) => {
     axios.post('/paper/save', formData, {
@@ -50,6 +51,24 @@ export const deleteOne = (_id) => {
 export const fetchAll = () => {
   return new Promise((resolve, reject) => {
     axios.get('/paper/fetch-all')
+      .then(response => {
+        // Manejar la respuesta exitosa
+        console.log(response.data)
+        resolve(response.data);
+      })
+    }).catch(function (error) {
+      if(error.response.status == 404){
+        console.error('Miembro a asociar no existe en el servidor')
+      }else{
+        console.error(error.response.data);
+      }
+      reject(error.response);
+    });
+}
+
+export const fetchByTopicId = (topic_id) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`/paper/fetch-by-topic?topic_id=${topic_id}`)
       .then(response => {
         // Manejar la respuesta exitosa
         console.log(response.data)

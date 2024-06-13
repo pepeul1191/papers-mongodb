@@ -84,6 +84,59 @@ router.get('/fetch-all', async (req, res, next) => {
   }
 });
 
+router.get('/fetch-by-topicxdddd', async (req, res, next) => {
+  const paperId = req.query.topic_id;
+  try {
+    const { db, client } = await dbConnection();
+    const papersCollection = db.collection('papers');
+    const result = await papersCollection.aggregate([
+      {
+        $lookup: {
+          from: "key_words",
+          localField: "key_words",
+          foreignField: "_id",
+          as: "key_words_data"
+        }
+      },
+      {
+        $project: {
+          _id: { $toString: "$_id" },
+          authors: 1,
+          author_abstract: 1,
+          my_abstract: 1,
+          name: 1,
+          year: 1,
+          source: 1,
+          source_url: 1,
+          my_ranking: 1,
+          key_words: 1,
+          doi: 1,
+          file_url: 1,
+          created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
+          updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
+          key_words: {
+            $map: {
+              input: "$key_words_data",
+              as: "kw",
+              in: {
+                _id: { $toString: "$$kw._id" },
+                name: "$$kw.name",
+              }
+            }
+          }
+        }
+      }
+    ]).toArray();
+    // save paper
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 router.get('/fetch-one', async(req, res, next) => {
   const paperId = req.query._id;
   console.log(paperId)
@@ -188,7 +241,7 @@ router.post('/delete', async (req, res, next) => {
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
   try {
-    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url } = req.body;
+    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id } = req.body;
     console.log(file_url);
     const generatedFileUrl = file == null ? req.generatedFileUrl : file_url;
     console.log(generatedFileUrl);
@@ -207,11 +260,11 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
       }
     }
     // create or update document
-    const paperCollection = db.collection('papers');
-    let doc = await paperCollection.findOne({ _id: new ObjectId(_id) });
+    const papers = db.collection('papers');
+    let doc = await papers.findOne({ _id: new ObjectId(_id) });
     const now = new Date();
     if (doc != null) {
-      await paperCollection.updateOne(
+      await papers.updateOne(
         { _id: new ObjectId(_id) }, // Filtro para encontrar el documento por _id
         {
           $set: {
@@ -230,7 +283,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
           }
         });
     }else{
-      await paperCollection.insertOne({
+      const document = await papers.insertOne({
         _id: new ObjectId(_id),
         name: name,
         authors: authors,
@@ -247,6 +300,16 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         updated: now,
         images: [],
       });
+      // update topics with the new paper id
+      const topics = db.collection('topics');
+      await topics.updateOne(
+        { _id: new ObjectId(topic_id) },
+        { $push: { 
+          articles: document.insertedId 
+          },
+          updated: now, 
+        }
+      )
     }
     // save paper
     client.close();

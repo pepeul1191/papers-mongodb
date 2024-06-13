@@ -90,7 +90,7 @@
       <td>{topic.updated}</td>
       <td>{topic.articles}</td>
       <td style="padding-left: 40px;">
-        <a class="btn-button" href="/topic/${topic._id}/article" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/article`)}}>
+        <a class="btn-button" href="/topic/${topic._id}/paper" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/paper`)}}>
           <i class="fa fa-file"></i>
         </a>
         <a class="btn-button" href="/topic/delete/{topic._id}" aria-current="page" on:click|preventDefault={deleteDocument(topic._id)}>

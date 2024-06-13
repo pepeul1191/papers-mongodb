@@ -20,7 +20,7 @@ router.get('/access/:num', (req, res, next) => {
     contents: getContent('error')[lang][error],
     lang: lang,
   };
-  res.render('error', locals);
+  res.status(404).render('error', locals);
 });
 
 export default router;

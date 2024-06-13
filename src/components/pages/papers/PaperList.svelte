@@ -1,20 +1,33 @@
 <script>
   import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
-  import { fetchAll, deleteOne } from '../../../services/paper_service';
+  import { fetchAll, deleteOne, fetchByTopicId } from '../../../services/paper_service';
 
   let papers = [];
+  export let topic_id = null;
 
-  onMount(() => { 
-    fetchAll()
-      .then(data => {
-        //console.log('Respuesta:', data);
-        papers = data;
-      })
-      .catch(error => {
-        console.error('Error al guardar:', error);
-        // Manejar el error
-      });
+  onMount(() => {
+    if(topic_id == null){
+      fetchAll()
+        .then(data => {
+          //console.log('Respuesta:', data);
+          papers = data;
+        })
+        .catch(error => {
+          console.error('Error al guardar:', error);
+          // Manejar el error
+        });
+    }else{
+      fetchByTopicId(topic_id)
+        .then(data => {
+          //console.log('Respuesta:', data);
+          papers = data;
+        })
+        .catch(error => {
+          console.error('Error al guardar:', error);
+          // Manejar el error
+        });
+    }
   });
 
   const deleteDocument = (_id) => {
@@ -67,7 +80,7 @@
     </tbody>
   </table>
   <div class="mb-12 text-end">
-    <a class="btn btn-primary" href="/paper/add" aria-current="page" on:click|preventDefault={() => {navigate('/paper/add')}}>
+    <a class="btn btn-primary" href="`/topic/${topic_id}/paper/add`" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic_id}/paper/add`)}}>
       <i class="fa fa-plus"></i>Agregar Paper
     </a>
   </div>

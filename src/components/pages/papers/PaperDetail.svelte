@@ -4,6 +4,7 @@
   import { save as savePaper, fetchOne } from '../../../services/paper_service';
 
   export let _id = null;
+  export let topic_id = null;
 
   const _generateId = () => {
     const timestamp = (new Date().getTime() / 1000 | 0).toString(16);
@@ -81,7 +82,7 @@
   
   const save = (event) => {
     event.preventDefault();
-    savePaper(paper)
+    savePaper(paper, topic_id)
       .then(response => {
         console.log('Respuesta:', response.data);
         paper.file_url = response.data;
