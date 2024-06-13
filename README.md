@@ -20,6 +20,14 @@ Migraciones con DBMATE - accesos/sqlite3:
 
 ### Consultas MongoDB
 
+Hacer backup
+
+    $ mongodump --db papers
+
+Restaurar backup
+
+    $ mongorestore --db papers <ruta_al_archivo_de_volcado>
+
 Listar todos los papers:
 
 ```javascript

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node ./bin/www --ignore './public/' --ignore './src/'",
+    "start:dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node ./bin/www --ignore './public/' --ignore './src/' --ignore './dumps/*.zip'",
     "dev": "rollup -c -w & node ./node_modules/nodemon/bin/nodemon.js node app.js --ignore './public/' --ignore './src/'",
     "dev:server": "node ./node_modules/nodemon/bin/nodemon.js node app.js --ignore './public/' --ignore './src/'",
     "dev:front": "rollup -c -w",
@@ -20,6 +20,7 @@
     "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.2.3",
+    "child_process": "^1.0.2",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",

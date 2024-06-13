@@ -15,7 +15,7 @@ import expressWs from 'express-ws';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const app = express();
 expressWs(app);
-console.log(path.join(__dirname, 'views'))
+// console.log(path.join(__dirname, 'views'))
 app.set('view engine', 'ejs');
 //app.set('views', 'C:\\desarrollo\\papers2\\views');
 app.set('views', path.join(__dirname, 'views'));
