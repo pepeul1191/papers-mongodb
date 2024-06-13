@@ -148,9 +148,10 @@
   };
 </script>
 
-<div class="container mt-1">
-  <h2 class="mb-4">Formulario de Artículo</h2>
-  <h4 class="mb-4">Detalle</h4>
+<div class="container mt-4">
+  <h4 class="mb-4">Formulario de Artículo</h4>
+  <hr>
+  <h5 class="mb-4">Detalle</h5>
   <form>
     <div class="row mb-3">
       <div class="col-md-1">
@@ -210,7 +211,7 @@
         <i class="fa fa-id-card-o" aria-hidden="true"></i>Copiar Referencia
       </button>
       <a href="/{paper.file_url}" target="_blank" class="btn btn-secondary btn-form">
-        <i class="fa fa-file"></i>Ver Documento
+        <i class="fa fa-search"></i>Ver Documento
       </a>
       <button type="submit" class="btn btn-primary btn-form" on:click={save}>
         <i class="fa fa-check"></i>Guardar Cambios
@@ -218,7 +219,7 @@
     </div>
   </form>
   <hr>
-  <h4 class="mb-4">Imagenes</h4>
+  <h5 class="mb-4">Imagenes</h5>
   <div class="mb-12">
     <label for="formFile" class="form-label">Subir Imágen</label>
     <div class="row">
@@ -230,7 +231,7 @@
       </div>
       <div class="col-md-2">
         <button type="button" class="btn btn-primary ms-3" on:click={uploadPicture}>
-          <i class="fa fa-upload"></i>Subir
+          <i class="fa fa-upload"></i>Subir Imagen
         </button>
       </div>
     </div>

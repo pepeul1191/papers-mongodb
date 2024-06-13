@@ -7,6 +7,7 @@
   import PaperDetail from '../pages/papers/PaperDetail.svelte';
   import Home from '../pages/papers/Home.svelte';
   import Contact from '../pages/papers/Contact.svelte';
+  import Topic from '../pages/papers/Topic.svelte';
   export let basepath = '/';
   
   onMount(() => {
@@ -28,6 +29,9 @@
             <a class="nav-link active" aria-current="page" on:click|preventDefault={() => {navigate('/')}}>Home</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/topic" on:click|preventDefault={() => {navigate('/topic')}}>Tópicos</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/paper" on:click|preventDefault={() => {navigate('/paper')}}>Papers</a>
           </li>
           <li class="nav-item">
@@ -44,6 +48,7 @@
   <Router basepath="{basepath}">
     <Route path="/" component={Home} />
     <Route path="/contact" component={Contact} />
+    <Route path="/topic" component={Topic} />
     <Route path="/paper" component={ArticleList} />
     <Route path="/paper/add" component={ArticleDetail} />
     <Route path="/paper/edit/:_id" let:params>
