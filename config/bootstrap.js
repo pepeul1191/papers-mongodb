@@ -4,6 +4,7 @@ import errorController from '../api/controllers/error_controller.js';
 import loginController from '../api/controllers/login_controller.js';
 import paperController from '../api/controllers/paper_controller.js';
 import imageController from '../api/controllers/image_controller.js';
+import topicController from '../api/controllers/topic_controller.js';
 
 export default (app) => {
   app.use('/', homeController);
@@ -12,4 +13,5 @@ export default (app) => {
   app.use('/file', fileController);
   app.use('/paper', paperController);
   app.use('/image', imageController);
+  app.use('/topic', topicController);
 }

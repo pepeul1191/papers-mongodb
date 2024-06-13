@@ -171,6 +171,7 @@ router.post('/delete', async (req, res, next) => {
     // create or update document
     const paperCollection = db.collection('papers');
     const result = await paperCollection.deleteOne({ _id: new ObjectId(_id) });
+    client.close();
     // Comprueba si se eliminó un documento correctamente
     if (result.deletedCount === 1) {
       // Retorna el éxito al cliente

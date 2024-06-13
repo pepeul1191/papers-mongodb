@@ -1,7 +1,7 @@
 <script>
   import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
-  import { save, deleteOne } from '../../../services/topic_service';
+  import { save, deleteOne, fetchAll } from '../../../services/topic_service';
 
   let newTopic = {
     _id: null,
@@ -32,8 +32,27 @@
   }
 
   const deleteDocument = (_id) => {
-    alert();
+    deleteOne(_id)
+      .then(data => {
+        topics = topics.filter(item => item._id !== _id);
+      })
+      .catch(error => {
+        console.error('Error al eliminar:', error);
+        // Manejar el error
+      });
   }
+
+  onMount(() => {
+    fetchAll()
+      .then(data => {
+        //console.log('Respuesta:', data);
+        topics = data;
+      })
+      .catch(error => {
+        console.error('Error al guardar:', error);
+        // Manejar el error
+      });
+  })
 </script>
 
 <div class="container mt-4">

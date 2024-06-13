@@ -4,7 +4,7 @@ import constants from '../../config/constants.js';
 //import helpers from '../../config/helpers.js';
 import { indexCss, indexJs } from '../helpers/home_helper.js';
 
-const view_routes = ['', '/paper/add', '/paper/edit/:_id', '/contact'];
+const view_routes = ['', '/paper', '/paper/add', '/paper/edit/:_id', '/topic', '/contact', ];
 router.get(view_routes, (req, res, next) => {
   // response
   const locals = {

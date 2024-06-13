@@ -21,7 +21,7 @@ export const save = (data) => {
 export const deleteOne = (_id) => {
   return new Promise((resolve, reject) => {
     const data = {_id: _id};
-    axios.post('/paper/delete', data)
+    axios.post('/topic/delete', data)
       .then(response => {
         resolve(response.data);
       })
@@ -33,7 +33,7 @@ export const deleteOne = (_id) => {
 
 export const fetchAll = () => {
   return new Promise((resolve, reject) => {
-    axios.get('/paper/fetch-all')
+    axios.get('/topic/fetch-all')
       .then(response => {
         // Manejar la respuesta exitosa
         console.log(response.data)
