@@ -5,6 +5,7 @@ import constants from '../../config/constants.js';
 import KeyWord from '../models/key_word.js';
 import { ObjectId } from 'mongodb';
 import { dbConnection } from '../../config/database.js';
+import { zipFolder } from '../helpers/topic_helper.js';
 
 const router = express.Router();
 
@@ -27,6 +28,22 @@ router.get('/fetch-all', async (req, res, next) => {
     client.close();
     // Retorna el ID de la palabra clave insertada o encontrada
     res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+router.get('/backup', async (req, res, next) => {
+  try {
+    zipFolder()
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.error('Error al comprimir el directorio:', err);
+        res.status(500).send('Error al comprimir el directorio');
+      });
   } catch (error) {
     console.error('Error al manejar la solicitud:', error);
     res.status(500).json({ message: 'Error interno del servidor' });

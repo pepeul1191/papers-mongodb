@@ -1,7 +1,7 @@
 <script>
   import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
-  import { save, deleteOne, fetchAll } from '../../../services/topic_service';
+  import { save, deleteOne, fetchAll, fetchBackup } from '../../../services/topic_service';
 
   let newTopic = {
     _id: null,
@@ -42,6 +42,23 @@
       });
   }
 
+  const downloadBackup = () => {
+    fetchBackup()
+      .then(data => {
+          console.log(data);
+          const link = document.createElement('a');
+          link.href = '/' + data;
+          link.setAttribute('download', '');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(error => {
+          console.error('Error al descargar backup: ', error);
+          // Manejar el error
+        });
+  }
+
   onMount(() => {
     fetchAll()
       .then(data => {
@@ -63,9 +80,12 @@
       <div class="col-md-5">
         <input type="text" class="form-control" placeholder="Nombre " id="pictureName" name="name" value={newTopic.name} on:input={formChange}>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
         <button type="button" class="btn btn-primary ms-3" on:click={addTopic}>
           <i class="fa fa-plus"></i>Agregar
+        </button>
+        <button type="button" class="btn btn-success ms-3" on:click={downloadBackup}>
+          <i class="fa fa-download"></i>Descargar Backup
         </button>
       </div>
     </div>

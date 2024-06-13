@@ -48,3 +48,21 @@ export const fetchAll = () => {
       reject(error.response);
     });
 }
+
+export const fetchBackup = () => {
+  return new Promise((resolve, reject) => {
+    axios.get('/topic/backup')
+      .then(response => {
+        // Manejar la respuesta exitosa
+        console.log(response.data)
+        resolve(response.data);
+      })
+    }).catch(function (error) {
+      if(error.response.status == 404){
+        console.error('Miembro a asociar no existe en el servidor')
+      }else{
+        console.error(error.response.data);
+      }
+      reject(error.response);
+    });
+}

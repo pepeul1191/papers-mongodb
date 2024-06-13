@@ -294,9 +294,6 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         images: [],
       });
       // update topics with the new paper id
-      console.log('1 +++++++++++++++++++++++++++')
-      console.log(topic_id);
-      console.log('2 +++++++++++++++++++++++++++')
       if(topic_id != null){
         const topics = db.collection('topics');
         await topics.updateOne(
