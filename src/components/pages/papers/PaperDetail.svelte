@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { save as savePaper, deleteOnePicture } from '../../../services/paper_service';
-  import { fetchOne, uploadPicture as upload } from '../../../services/paper_service';
+  import { uploadOne, deleteOne } from '../../../services/image_service';
+  import { save as savePaper, fetchOne } from '../../../services/paper_service';
 
   export let _id = null;
 
@@ -113,7 +113,7 @@
   }
 
   const uploadPicture = (event) => {
-    upload(picture)
+    uploadOne(picture)
       .then(response => {
         console.log('Respuesta:', response.data);
         picture._id = response.data._id;
@@ -137,7 +137,7 @@
   }
 
   const deletePicture = (_id) => {
-    deleteOnePicture(_id)
+    deleteOne(_id)
       .then(data => {
         pictures = pictures.filter(item => item._id !== _id);
       })
@@ -206,13 +206,13 @@
       <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
     </div>
     <div class="mb-12 text-end">
-      <button class="btn btn-info" on:click={createReference}>
+      <button class="btn btn-info btn-form" on:click={createReference}>
         <i class="fa fa-id-card-o" aria-hidden="true"></i>Copiar Referencia
       </button>
-      <a href="/{paper.file_url}" target="_blank" class="btn btn-secondary">
+      <a href="/{paper.file_url}" target="_blank" class="btn btn-secondary btn-form">
         <i class="fa fa-file"></i>Ver Documento
       </a>
-      <button type="submit" class="btn btn-primary" on:click={save}>
+      <button type="submit" class="btn btn-primary btn-form" on:click={save}>
         <i class="fa fa-check"></i>Guardar Cambios
       </button>
     </div>
@@ -221,12 +221,18 @@
   <h4 class="mb-4">Imagenes</h4>
   <div class="mb-12">
     <label for="formFile" class="form-label">Subir Imágen</label>
-    <div class="d-flex align-items-center">
-      <input type="file" class="form-control" id="formFile" name="file" on:change={pictureChange}>
-      <input type="text" class="form-control ms-2" placeholder="Nombre de la imagen" id="pictureName" name="name" value={picture.name} on:input={pictureChange}>
-      <button type="button" class="btn btn-primary ms-3" on:click={uploadPicture}>
-        <i class="fa fa-upload"></i>Subir
-      </button>
+    <div class="row">
+      <div class="col-md-5">
+        <input type="file" class="form-control" id="formFile" name="file" on:change={pictureChange}>
+      </div>
+      <div class="col-md-5">
+        <input type="text" class="form-control ms-2" placeholder="Nombre de la imagen" id="pictureName" name="name" value={picture.name} on:input={pictureChange}>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-primary ms-3" on:click={uploadPicture}>
+          <i class="fa fa-upload"></i>Subir
+        </button>
+      </div>
     </div>
   </div>
   <div class="mb-12">
@@ -257,5 +263,9 @@
   .picture{
     border-radius: 0px;
     margin-top: 15px;
+  }
+
+  .btn-form{
+    margin-left: 10px;
   }
 </style>
