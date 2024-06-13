@@ -32,18 +32,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-const view_routes = ['', '/add', '/edit/:_id'];
-router.get(view_routes, (req, res, next) => {
-  // response
-  const locals = {
-    constants: constants,
-    title: 'Bienvenido',
-    session: req.session,
-    contents: {},
-  };
-  res.status(200).render('papers', locals);
-});
-
 router.get('/fetch-all', async (req, res, next) => {
   try {
     const { db, client } = await dbConnection();

@@ -4,18 +4,16 @@ import constants from '../../config/constants.js';
 //import helpers from '../../config/helpers.js';
 import { indexCss, indexJs } from '../helpers/home_helper.js';
 
-router.get('', (req, res, next) => {
+const view_routes = ['', '/paper/add', '/paper/edit/:_id', '/contact'];
+router.get(view_routes, (req, res, next) => {
   // response
   const locals = {
     constants: constants,
     title: 'Bienvenido',
-    //helpers: helpers,
-    csss: indexCss(),
     session: req.session,
-    jss: indexJs(),
     contents: {},
   };
-  res.status(200).render('home', locals);
+  res.status(200).render('papers', locals);
 });
 
 router.get('/profile', (req, res, next) => {

@@ -5,7 +5,9 @@
   import ArticleList from '../pages/papers/PaperList.svelte';
   import ArticleDetail from '../pages/papers/PaperDetail.svelte';
   import PaperDetail from '../pages/papers/PaperDetail.svelte';
-  export let basepath = '/paper';
+  import Home from '../pages/papers/Home.svelte';
+  import Contact from '../pages/papers/Contact.svelte';
+  export let basepath = '/';
   
   onMount(() => {
   
@@ -40,9 +42,11 @@
   </nav>
   
   <Router basepath="{basepath}">
-    <Route path="/" component={ArticleList} />
-    <Route path="/add" component={ArticleDetail} />
-    <Route path="/edit/:_id" let:params>
+    <Route path="/" component={Home} />
+    <Route path="/contact" component={Contact} />
+    <Route path="/paper" component={ArticleList} />
+    <Route path="/paper/add" component={ArticleDetail} />
+    <Route path="/paper/edit/:_id" let:params>
       <PaperDetail _id={params._id} />
     </Route>
   </Router>

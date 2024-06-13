@@ -10,12 +10,6 @@ const index = (req, res, next) => {
   const locals = {
     constants: constants(),
     title: 'Bienvenido',
-    //helpers: helpers,
-    csss: indexCss(),
-    jss: indexJs(),
-    message: '',
-    messageColor: '',
-    contents: {},
   };
   res.render('login', locals);
 }
