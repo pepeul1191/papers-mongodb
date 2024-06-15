@@ -18,7 +18,13 @@ router.get('/fetch-all', async (req, res, next) => {
         $project: {
           _id: { $toString: "$_id" },
           name: 1,
-          papers: { $size: "$papers" },
+          papers: { 
+            $cond: {
+              if: { $isArray: "$papers" }, // Verifica si "papers" es un array
+              then: { $size: "$papers" },  // Si es un array, calcula su tamaño
+              else: 0                      // Si no es un array (null o vacío), devuelve 0
+            }
+           },
           created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
           updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
         }
