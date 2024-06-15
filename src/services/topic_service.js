@@ -23,7 +23,7 @@ export const deleteOne = (_id) => {
     const data = {_id: _id};
     axios.post('/topic/delete', data)
       .then(response => {
-        resolve(response.data);
+        resolve(_id);
       })
       .catch(error => {
         reject(error);

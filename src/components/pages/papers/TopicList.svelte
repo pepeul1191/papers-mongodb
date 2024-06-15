@@ -1,6 +1,7 @@
 <script>
   import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
+  import { Modal } from 'bootstrap';
   import { save, deleteOne, fetchAll, fetchBackup } from '../../../services/topic_service';
 
   let newTopic = {
@@ -11,6 +12,8 @@
   };
 
   let topics = [];
+  let _idToDelete = null;
+  let beforeDeleteModal;
 
   const formChange = (event) => {
     const { name, value } = event.target;
@@ -32,14 +35,29 @@
   }
 
   const deleteDocument = (_id) => {
-    deleteOne(_id)
-      .then(data => {
-        topics = topics.filter(item => item._id !== _id);
-      })
-      .catch(error => {
-        console.error('Error al eliminar:', error);
-        // Manejar el error
-      });
+    _idToDelete = _id;
+    beforeDeleteModal.show();
+  }
+
+  const closeModal = () => {
+    _idToDelete = null;
+    beforeDeleteModal.hide();
+  }
+
+  const deleteOk = () => {
+    // Aquí puedes realizar acciones al aceptar el modal
+    if(_idToDelete != null){
+      deleteOne(_idToDelete)
+        .then(_idDeleted => {
+          topics = topics.filter(item => item._id !== _idDeleted);
+          topics = topics;
+        })
+        .catch(error => {
+          console.error('Error al eliminar:', error);
+          // Manejar el error
+        });
+    }
+    closeModal();
   }
 
   const downloadBackup = () => {
@@ -60,6 +78,7 @@
   }
 
   onMount(() => {
+    beforeDeleteModal = new Modal(beforeDeleteModal);
     fetchAll()
       .then(data => {
         //console.log('Respuesta:', data);
@@ -122,5 +141,26 @@
   </div>
 </div>
 
+<div class="modal fade" bind:this={beforeDeleteModal}>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Seguro que quiere eliminar este tópico?</h5>
+        <button type="button" class="btn-close" aria-label="Close" on:click={closeModal}></button>
+      </div>
+      <div class="modal-body">
+        <p>Si acepta no podrá deshacer la eliminación.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" on:click={deleteOk}>Aceptar</button>
+        <button type="button" class="btn btn-secondary" on:click={closeModal}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
+  .modal-content{
+    border-radius: 0px;
+  }
 </style>
