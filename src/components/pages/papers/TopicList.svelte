@@ -27,6 +27,13 @@
         console.log('Respuesta:', response.data);
         topics.push(response.data);
         topics = topics;
+        messageAlert.show = true;
+        messageAlert.message = `Se agregó el tópico <b>${response.data._id}</b>`;
+        messageAlert.class = 'success';
+        messageAlert = messageAlert;
+        setTimeout(() => {
+          messageAlert.show  = false;
+        }, 5000); 
       })
       .catch(error => {
         console.error('Error al guardar:', error);
@@ -44,11 +51,24 @@
     beforeDeleteModal.hide();
   }
 
+  let messageAlert = {
+    show: false,
+    message: '',
+    class: '',
+  };
+
   const deleteOk = () => {
     // Aquí puedes realizar acciones al aceptar el modal
     if(_idToDelete != null){
       deleteOne(_idToDelete)
         .then(_idDeleted => {
+          messageAlert.show = true;
+          messageAlert.message = `Se eliminó el tópico <b>${_idDeleted}</b>`;
+          messageAlert.class = 'success';
+          messageAlert = messageAlert;
+          setTimeout(() => {
+            messageAlert.show  = false;
+          }, 5000); 
           topics = topics.filter(item => item._id !== _idDeleted);
           topics = topics;
         })
@@ -85,14 +105,24 @@
         topics = data;
       })
       .catch(error => {
-        console.error('Error al guardar:', error);
-        // Manejar el error
+        messageAlert.show = true;
+        messageAlert.message = 'Ocurriún un error al traer los tópicos del servidor';
+        messageAlert.class = 'danger';
+        messageAlert = messageAlert;
+        setTimeout(() => {
+          messageAlert.show  = false;
+        }, 5000); 
       });
   })
 </script>
 
 <div class="container mt-4">
   <h5 class="mb-4">Gestión de Tópicos</h5>
+  {#if messageAlert.show}
+  <div class="alert alert-{messageAlert.class}" role="alert">
+    {@html messageAlert.message}
+  </div>
+  {/if}
   <div class="mb-12">
     <label for="formFile" class="form-label">Nombre del nuevo tópico</label>
     <div class="row">
@@ -160,7 +190,5 @@
 </div>
 
 <style>
-  .modal-content{
-    border-radius: 0px;
-  }
+
 </style>

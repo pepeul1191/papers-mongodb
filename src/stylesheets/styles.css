@@ -245,3 +245,7 @@ footer{
   margin-right: 5px;
   color: black;
 }
+
+.modal-content, .alert{
+    border-radius: 0px !important;
+  }
