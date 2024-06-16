@@ -183,6 +183,15 @@ router.get('/fetch-one', async(req, res, next) => {
               }
             }
           },
+          tags: {
+            $map: {
+              input: "$tags",
+              as: "kw",
+              in: {
+                _id: { $toString: "$$kw._id" },
+              },
+            }
+          },
           images: {
             $map: {
               input: "$images_data",
@@ -292,6 +301,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         created: now,
         updated: now,
         images: [],
+        tags: [],
       });
       // update topics with the new paper id
       if(topic_id != null){
