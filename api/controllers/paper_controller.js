@@ -221,7 +221,7 @@ router.post('/delete', async (req, res, next) => {
     // Comprueba si se eliminó un documento correctamente
     if (result.deletedCount === 1) {
       // Retorna el éxito al cliente
-      res.status(200).json({ message: 'Documento eliminado exitosamente' });
+      res.status(200).send(_id);
     } else {
       // Retorna un mensaje si el documento no se encontró
       res.status(404).json({ message: 'Documento no encontrado' });

@@ -160,10 +160,10 @@
       <td style="text-align: center;">{topic.papers}</td>
       <td style="padding-left: 40px;">
         <a class="btn-button" href="/topic/${topic._id}/paper" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/paper`)}}>
-          <i class="fa fa-file"></i>
+          <i class="fa fa-list"></i>
         </a>
         <a class="btn-button" href="/topic/delete/{topic._id}" aria-current="page" on:click|preventDefault={deleteDocument(topic._id)}>
-          <i class="fa fa-times"></i>
+          <i class="fa fa-trash"></i>
         </a>
       </td>
     </tr>
@@ -182,8 +182,12 @@
         <p>Si acepta no podrá deshacer la eliminación.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" on:click={deleteOk}>Aceptar</button>
-        <button type="button" class="btn btn-secondary" on:click={closeModal}>Cancelar</button>
+        <button type="button" class="btn btn-danger" on:click={deleteOk}>
+          <i class="fa fa-check"></i>Aceptar
+        </button>
+        <button type="button" class="btn btn-secondary" on:click={closeModal}>
+          <i class="fa fa-times"></i>Cancelar
+        </button>
       </div>
     </div>
   </div>
