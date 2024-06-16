@@ -117,6 +117,8 @@ router.get('/fetch-by-topic', async (req, res, next) => {
           year: 1,
           my_ranking: 1,
           file_url: 1,
+          doi: 1,
+          source_url: 1,
         }
       }
     ]).toArray();
@@ -290,8 +292,6 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
           }
         });
     }else{
-      console.log('1 ++++++++++++++++++++')
-      console.log(resarch_string_id)
       const document = await papers.insertOne({
         _id: new ObjectId(_id),
         name: name,

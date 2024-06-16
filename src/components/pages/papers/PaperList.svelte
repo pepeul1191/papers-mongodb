@@ -81,9 +81,19 @@
     }
   });
 
-  /*const deleteDocument = (_id) => {
-    
-  }*/
+  const createReference = (event, paper) => {
+    event.preventDefault();
+    const reference = `${paper.authors}. ${paper.name}. ${paper.source}, ${paper.year}. DOI: ${paper.doi}`;
+    navigator.clipboard.writeText(reference)
+    .then(function() {
+      console.log('Referencia al portapapeles: ' + reference);
+      alert('¡Referencia al portapapeles!');
+    })
+    .catch(function(err) {
+      console.error('Error al intentar copiar al portapapeles: ', err);
+      alert('¡Error al intentar copiar al portapapeles!');
+    });
+  }
 </script>
 
 <div class="container mt-4">
@@ -121,6 +131,9 @@
           <td style="text-align: center;">
             <a class="btn-button" href="/topic/{topic_id}/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic_id}/paper/edit/${paper._id}`)}}>
               <i class="fa fa-pencil"></i>
+            </a>
+            <a class="btn-button" href="/topic/{topic_id}/paper" aria-current="page" on:click|preventDefault={(event) => createReference(event, paper)}>
+              <i class="fa fa-id-card-o"></i>
             </a>
             <a class="btn-button" href="/{paper.file_url}" target="_blank">
               <i class="fa fa-search"></i>

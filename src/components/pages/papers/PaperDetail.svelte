@@ -126,6 +126,26 @@
           console.error('Error al guardar:', error);
           // Manejar el error
         });
+    }else{
+      fetchAllTags(topic_id)
+        .then((data) => {
+          console.log('Respuesta:', data);
+          tags = data;
+          fetchByTopicId(topic_id)
+            .then(data => {
+              //console.log('Respuesta:', data);
+              searchStrings = data;
+              console.log(searchStrings)
+            })
+            .catch(error => {
+              console.error('Error al guardar:', error);
+              // Manejar el error
+            });
+        })
+        .catch(error => {
+          console.error('Error al guardar:', error);
+          // Manejar el error
+        });
     }
    });
   
