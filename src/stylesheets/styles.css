@@ -246,6 +246,6 @@ footer{
   color: black;
 }
 
-.modal-content, .alert{
-    border-radius: 0px !important;
-  }
+.modal-content, .alert, .form-select{
+  border-radius: 0px !important;
+}

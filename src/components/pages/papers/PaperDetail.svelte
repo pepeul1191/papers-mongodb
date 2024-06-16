@@ -3,6 +3,8 @@
   import { uploadOne, deleteOne } from '../../../services/image_service';
   import { save as savePaper, fetchOne } from '../../../services/paper_service';
   import { fetchAllTags } from '../../../services/topic_service';
+  import { fetchByTopicId } from '../../../services/search_string_service';
+  import e from 'cors';
   
   export let _id = null;
   export let topic_id = null;
@@ -31,6 +33,7 @@
 
   let pictures = [];
   let tags = [];
+  let searchStrings = [];
 
   let picture = {
     _id: _id == null ? _generateId() : _id,
@@ -54,6 +57,7 @@
     doi: '',
     file: null,
     file_url: '',
+    resarch_string_id: '',
   };
 
   let messageDetailAlert = {
@@ -75,32 +79,43 @@
         .then((data) => {
           console.log('Respuesta:', data);
           tags = data;
-          fetchOne(_id)
-            .then((data) => {
-              console.log('Respuesta:', data);
-              paper.name = data.name;
-              paper.authors = data.authors;
-              paper.author_abstract = data.author_abstract;
-              paper.my_abstract = data.my_abstract;
-              paper.year = data.year;
-              paper.source = data.source;
-              paper.source_url = data.source_url;
-              paper.my_ranking = data.my_ranking;
-              paper.key_words =  data.key_words.map(item => item.name);
-              paper.doi = data.doi;
-              paper.file = data.file;
-              paper.file_url = `${data.file_url}`;
-              // picture
-              pictures = data.images;
-              // tags
-              tags.forEach((tag) => {
-                if (data.tags.includes(tag._id)) {
-                  tag.checked = true;
-                } else {
-                  tag.checked = false;
-                }
-              });
-              tags = tags;
+          fetchByTopicId(topic_id)
+            .then(data => {
+              //console.log('Respuesta:', data);
+              searchStrings = data;
+              console.log(searchStrings)
+              fetchOne(_id)
+                .then((data) => {
+                  console.log('Respuesta:', data);
+                  paper.name = data.name;
+                  paper.authors = data.authors;
+                  paper.author_abstract = data.author_abstract;
+                  paper.my_abstract = data.my_abstract;
+                  paper.year = data.year;
+                  paper.source = data.source;
+                  paper.source_url = data.source_url;
+                  paper.resarch_string_id = data.resarch_string_id;
+                  paper.my_ranking = data.my_ranking;
+                  paper.key_words =  data.key_words.map(item => item.name);
+                  paper.doi = data.doi;
+                  paper.file = data.file;
+                  paper.file_url = `${data.file_url}`;
+                  // picture
+                  pictures = data.images;
+                  // tags
+                  tags.forEach((tag) => {
+                    if (data.tags.includes(tag._id)) {
+                      tag.checked = true;
+                    } else {
+                      tag.checked = false;
+                    }
+                  });
+                  tags = tags;
+                })
+                .catch(error => {
+                  console.error('Error al guardar:', error);
+                  // Manejar el error
+                });
             })
             .catch(error => {
               console.error('Error al guardar:', error);
@@ -136,6 +151,7 @@
 
   const formChange = (event) => {
     const { name, value } = event.target;
+    console.log(event.value)
     if (name === 'file') {
       paper = { ...paper, [name]: event.target.files[0] }; // Captura el primer archivo seleccionado
     } else if (name == 'key_words'){
@@ -240,17 +256,24 @@
         <input type="text" class="form-control" id="txtDoi" name="doi" value={paper.doi} on:input={formChange}>
       </div>
     </div>
+    <!-- Cadena -->
+    <div class="mb-3">
+      <label for="txtName" class="form-label">Cadena de Búsqueda</label>
+      <select class="form-select" id="txtName" name="resarch_string_id" on:change={formChange} bind:value={paper.resarch_string_id} on:change={formChange}>
+        {#each searchStrings as searchString}
+          {#if searchString._id == paper.resarch_string_id}
+            <option value="{searchString._id}" selected>{searchString.name}</option>
+          {:else}
+            <option value="{searchString._id}">{searchString.name}</option>
+          {/if}
+        {/each}
+      </select>
+    </div>
     <!-- Autores del artículo -->
     <div class="mb-3">
         <label for="txtAuthors" class="form-label">Autores</label>
         <input type="text" class="form-control" id="txtAuthors" name="authors" value={paper.authors} on:input={formChange}>
     </div>
-    <!-- Nombre -->
-    <div class="mb-3">
-        <label for="txtName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="txtName" name="name" value={paper.name} on:input={formChange}>
-    </div>
-
     <!-- Resumen del autor -->
     <div class="mb-3">
         <label for="txtAuthorAbstract" class="form-label">Resumen del Autor</label>

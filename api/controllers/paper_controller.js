@@ -171,6 +171,7 @@ router.get('/fetch-one', async(req, res, next) => {
           key_words: 1,
           doi: 1,
           file_url: 1,
+          resarch_string_id: { $toString: "$resarch_string_id" },
           created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
           updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
           key_words: {
@@ -243,7 +244,7 @@ router.post('/delete', async (req, res, next) => {
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
   try {
-    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id, tags } = req.body;
+    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id, tags, resarch_string_id } = req.body;
     //console.log(file_url);
     let tagsArray = JSON.parse(tags);
     let objectIdTags = tagsArray.map(tag => new ObjectId(tag));
@@ -285,9 +286,12 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
             file_url: generatedFileUrl,
             updated: now,
             tags: objectIdTags,
+            resarch_string_id: new ObjectId(resarch_string_id)
           }
         });
     }else{
+      console.log('1 ++++++++++++++++++++')
+      console.log(resarch_string_id)
       const document = await papers.insertOne({
         _id: new ObjectId(_id),
         name: name,
@@ -300,6 +304,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         my_ranking: my_ranking,
         key_words: keyWordsIdsArray,
         doi: doi,
+        resarch_string_id: resarch_string_id == '' ? null : new ObjectId(resarch_string_id),
         file_url: generatedFileUrl,
         created: now,
         updated: now,

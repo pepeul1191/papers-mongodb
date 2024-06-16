@@ -47,7 +47,7 @@
   <Router basepath="{basepath}">
     <Route path="/" component={Home} />
     <Route path="/contact" component={Contact} />
-    <Route path="/topic" component={TopicList} />s
+    <Route path="/topic" component={TopicList} />
     
     <Route path="/topic/:_id/tag" let:params>
       <TopicTagList topic_id={params._id} />
