@@ -87,6 +87,46 @@ router.get('/fetch-all-tag', async (req, res, next) => {
   }
 });
 
+router.get('/fetch-all-search-string', async (req, res, next) => {
+  try {
+    const { db, client } = await dbConnection();
+    const topics = db.collection('topics');
+    const _id = req.query._id; // topic_id
+    const result = await topics.aggregate([
+      {
+        $match: { _id: new ObjectId(_id) }
+      },
+      {
+      $lookup: {
+          from: "search_strings",
+          localField: "search_strings",
+          foreignField: "_id",
+          as: "search_strings_data"
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          "search_strings_data": 1
+        }
+      },
+      {
+        $unwind: "$search_strings_data" // Descompone el arreglo search_strings_data en múltiples documentos
+      },
+      {
+        $replaceRoot: { newRoot: "$search_strings_data" } // Reemplaza el documento raíz con los documentos dentro de tags_data
+      }
+    ]).toArray();
+    // save paper
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 router.get('/backup', async (req, res, next) => {
   try {
     zipFolder()

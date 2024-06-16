@@ -8,6 +8,8 @@
   import Home from '../pages/papers/Home.svelte';
   import Contact from '../pages/papers/Contact.svelte';
   import TopicList from '../pages/papers/TopicList.svelte';
+  import TopicSearchStringList from '../pages/papers/TopicSearchStringList.svelte';
+  import SearchStringDetail from '../pages/papers/SearchStringDetail.svelte';
   export let basepath = '/';
   
   onMount(() => {
@@ -45,12 +47,24 @@
   <Router basepath="{basepath}">
     <Route path="/" component={Home} />
     <Route path="/contact" component={Contact} />
-    <Route path="/topic" component={TopicList} />
-    <Route path="/topic/:_id/paper" let:params>
-      <PaperList topic_id={params._id} />
-    </Route>
+    <Route path="/topic" component={TopicList} />s
+    
     <Route path="/topic/:_id/tag" let:params>
       <TopicTagList topic_id={params._id} />
+    </Route>
+    <!-- cadena de busqueda -->
+    <Route path="/topic/:_id/search-string" let:params>
+      <TopicSearchStringList topic_id={params._id} />
+    </Route>
+    <Route path="/topic/:_id/search-string/add" let:params>
+      <SearchStringDetail topic_id={params._id} />
+    </Route>
+    <Route path="/topic/:topic_id/search-string/edit/:_id" let:params>
+      <SearchStringDetail topic_id={params.topic_id} _id={params._id} />
+    </Route>
+    <!-- papers -->
+    <Route path="/topic/:_id/paper" let:params>
+      <PaperList topic_id={params._id} />
     </Route>
     <Route path="/topic/:_id/paper/add" let:params>
       <PaperDetail topic_id={params._id} />
@@ -58,6 +72,7 @@
     <Route path="/topic/:topic_id/paper/edit/:_id" let:params>
       <PaperDetail topic_id={params.topic_id} _id={params._id} />
     </Route>
+    
   </Router>
   
   <footer class="bg-dark text-white pt-4">

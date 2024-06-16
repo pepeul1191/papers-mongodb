@@ -174,12 +174,15 @@
       <td>{topic.updated}</td>
       <td style="text-align: center;">{topic.papers}</td>
       <td style="text-align: center;">{topic.tags}</td>
-      <td style="padding-left: 27px;">
+      <td style="padding-left: 18px;">
+        <a class="btn-button" href="/topic/${topic._id}/search-string" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/search-string`)}}>
+          <i class="fa fa-hashtag"></i>
+        </a>
         <a class="btn-button" href="/topic/${topic._id}/tag" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/tag`)}}>
           <i class="fa fa-tags"></i>
         </a>
         <a class="btn-button" href="/topic/${topic._id}/paper" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/paper`)}}>
-          <i class="fa fa-list"></i>
+        <i class="fa fa-list"></i>
         </a>
         <a class="btn-button" href="/topic/delete/{topic._id}" aria-current="page" on:click|preventDefault={deleteDocument(topic._id)}>
           <i class="fa fa-trash"></i>
