@@ -81,10 +81,10 @@ export const fetchBackup = () => {
 
 export const fetchAllTags = (topic_id) => {
   return new Promise((resolve, reject) => {
-    axios.get(`/topic/${topic_id}/tag/fetch-all`)
+    axios.get(`/topic/fetch-all-tag?_id=${topic_id}`)
       .then(response => {
         // Manejar la respuesta exitosa
-        console.log(response.data);
+        //console.log(response.data);
         resolve(response.data);
       })
       .catch(error => {

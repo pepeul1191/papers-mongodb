@@ -47,11 +47,11 @@ router.get('/fetch-all', async (req, res, next) => {
   }
 });
 
-router.get('/:_id/tag/fetch-all', async (req, res, next) => {
+router.get('/fetch-all-tag', async (req, res, next) => {
   try {
     const { db, client } = await dbConnection();
     const topics = db.collection('topics');
-    const _id = req.params._id;
+    const _id = req.query._id; // topic_id
     const result = await topics.aggregate([
       {
         $match: { _id: new ObjectId(_id) }

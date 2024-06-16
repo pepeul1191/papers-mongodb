@@ -60,8 +60,8 @@
     </Route>
     <Route path="/paper" component={PaperList} />
     <Route path="/paper/add" component={PaperDetail} />
-    <Route path="/paper/edit/:_id" let:params>
-      <PaperDetail _id={params._id} />
+    <Route path="/topic/:topic_id/paper/edit/:_id" let:params>
+      <PaperDetail topic_id={params.topic_id} _id={params._id} />
     </Route>
   </Router>
   

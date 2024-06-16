@@ -119,13 +119,13 @@
           <td>{paper.year}</td>
           <td>{paper.my_ranking}</td>
           <td style="text-align: center;">
-            <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={() => {navigate(`/paper/edit/${paper._id}`)}}>
+            <a class="btn-button" href="/topic/{topic_id}/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic_id}/paper/edit/${paper._id}`)}}>
               <i class="fa fa-pencil"></i>
             </a>
             <a class="btn-button" href="/{paper.file_url}" target="_blank">
               <i class="fa fa-search"></i>
             </a>
-            <a class="btn-button" href="/paper/edit/{paper._id}" aria-current="page" on:click|preventDefault={deleteDocument(paper._id)}>
+            <a class="btn-button" href="/paper/delete/{paper._id}" aria-current="page" on:click|preventDefault={deleteDocument(paper._id)}>
               <i class="fa fa-trash"></i>
             </a>
           </td>

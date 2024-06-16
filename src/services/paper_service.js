@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const save = (data, topicId) => {
+export const save = (data, tags, topicId) => {
   const formData = new FormData();
   Object.keys(data).forEach(key => {
     if (key === 'file' && data[key]) {
@@ -11,6 +11,14 @@ export const save = (data, topicId) => {
       formData.append(key, data[key]);
     }
   });
+  let tagsSelected = []
+  tags.forEach((tag) => {
+    console.log(tag)
+    if(tag.checked){
+      tagsSelected.push(tag._id);
+    }
+  });
+  formData.append('tags', JSON.stringify(tagsSelected));
   formData.append('topic_id', topicId);
   //console.log(formData);
   // send

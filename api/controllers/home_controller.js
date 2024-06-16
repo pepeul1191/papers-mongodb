@@ -14,6 +14,7 @@ const view_routes = [
   '/topic/:_id/tag',
   '/topic/:_id/paper',
   '/topic/:_id/paper/add',
+  '/topic/:_id/paper/edit/:_id',
 ];
 router.get(view_routes, (req, res, next) => {
   // response

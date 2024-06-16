@@ -186,9 +186,9 @@ router.get('/fetch-one', async(req, res, next) => {
           tags: {
             $map: {
               input: "$tags",
-              as: "kw",
+              as: "t",
               in: {
-                _id: { $toString: "$$kw._id" },
+                $toString: "$$t",
               },
             }
           },
@@ -243,10 +243,12 @@ router.post('/delete', async (req, res, next) => {
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
   try {
-    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id } = req.body;
-    console.log(file_url);
+    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id, tags } = req.body;
+    //console.log(file_url);
+    let tagsArray = JSON.parse(tags);
+    let objectIdTags = tagsArray.map(tag => new ObjectId(tag));
     const generatedFileUrl = file == null ? req.generatedFileUrl : file_url;
-    console.log(generatedFileUrl);
+    //console.log(generatedFileUrl);
     const { db, client } = await dbConnection();
     // generate key words array of object ids
     let keyWordsIdsArray = [];
@@ -281,7 +283,8 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
             key_words: keyWordsIdsArray,
             doi: doi,
             file_url: generatedFileUrl,
-            updated: now 
+            updated: now,
+            tags: objectIdTags,
           }
         });
     }else{
@@ -301,7 +304,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         created: now,
         updated: now,
         images: [],
-        tags: [],
+        tags: tags,
       });
       // update topics with the new paper id
       if(topic_id != null){

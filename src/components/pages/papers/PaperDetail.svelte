@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import { uploadOne, deleteOne } from '../../../services/image_service';
   import { save as savePaper, fetchOne } from '../../../services/paper_service';
+  import { fetchAllTags } from '../../../services/topic_service';
   
-
   export let _id = null;
   export let topic_id = null;
 
@@ -30,6 +30,7 @@
   }
 
   let pictures = [];
+  let tags = [];
 
   let picture = {
     _id: _id == null ? _generateId() : _id,
@@ -57,22 +58,42 @@
 
   onMount(() => {
     if(_id != null){
-      fetchOne(_id)
+      console.log(topic_id);
+      fetchAllTags(topic_id)
         .then((data) => {
           console.log('Respuesta:', data);
-          paper.name = data.name;
-          paper.authors = data.authors;
-          paper.author_abstract = data.author_abstract;
-          paper.my_abstract = data.my_abstract;
-          paper.year = data.year;
-          paper.source = data.source;
-          paper.source_url = data.source_url;
-          paper.my_ranking = data.my_ranking;
-          paper.key_words =  data.key_words.map(item => item.name);
-          paper.doi = data.doi;
-          paper.file = data.file;
-          paper.file_url = `${data.file_url}`;
-          pictures = data.images;
+          tags = data;
+          fetchOne(_id)
+            .then((data) => {
+              console.log('Respuesta:', data);
+              paper.name = data.name;
+              paper.authors = data.authors;
+              paper.author_abstract = data.author_abstract;
+              paper.my_abstract = data.my_abstract;
+              paper.year = data.year;
+              paper.source = data.source;
+              paper.source_url = data.source_url;
+              paper.my_ranking = data.my_ranking;
+              paper.key_words =  data.key_words.map(item => item.name);
+              paper.doi = data.doi;
+              paper.file = data.file;
+              paper.file_url = `${data.file_url}`;
+              // picture
+              pictures = data.images;
+              // tags
+              tags.forEach((tag) => {
+                if (data.tags.includes(tag._id)) {
+                  tag.checked = true;
+                } else {
+                  tag.checked = false;
+                }
+              });
+              tags = tags;
+            })
+            .catch(error => {
+              console.error('Error al guardar:', error);
+              // Manejar el error
+            });
         })
         .catch(error => {
           console.error('Error al guardar:', error);
@@ -83,9 +104,9 @@
   
   const save = (event) => {
     event.preventDefault();
-    savePaper(paper, topic_id)
+    savePaper(paper, tags, topic_id)
       .then(response => {
-        console.log('Respuesta:', response.data);
+        //console.log('Respuesta:', response.data);
         paper.file_url = response.data;
       })
       .catch(error => {
@@ -148,6 +169,10 @@
         // Manejar el error
       });
   };
+
+  const handleCheckboxChange = (event, tag) => {
+    tag.checked = event.target.checked;
+  }
 </script>
 
 <div class="container mt-4">
@@ -210,7 +235,18 @@
     </div>
     <div class="mb-3">
       <label for="formFile" class="form-label">Mis Etiquetas</label>
-      
+      <div class="row">
+        {#each tags as tag}
+        <div class="col-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id={'checkbox' + tag._id} value="option1" on:change={(event) => handleCheckboxChange(event, tag)} bind:checked={tag.checked} name={'checkbox' + tag._id}>
+                <label class="form-check-label" for={'checkbox' + tag._id}>
+                  {tag.name}
+                </label>
+            </div>
+        </div>
+        {/each}
+      </div>
     </div>
     <div class="mb-12 text-end">
       <button class="btn btn-info btn-form" on:click={createReference}>
