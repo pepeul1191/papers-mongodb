@@ -32,9 +32,6 @@
             <a class="nav-link" href="/topic" on:click|preventDefault={() => {navigate('/topic')}}>Tópicos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/paper" on:click|preventDefault={() => {navigate('/paper')}}>Papers</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/contact" on:click|preventDefault={() => {navigate('/contact')}}>Contacto</a>
           </li>
           <li class="nav-item">
@@ -58,8 +55,6 @@
     <Route path="/topic/:_id/paper/add" let:params>
       <PaperDetail topic_id={params._id} />
     </Route>
-    <Route path="/paper" component={PaperList} />
-    <Route path="/paper/add" component={PaperDetail} />
     <Route path="/topic/:topic_id/paper/edit/:_id" let:params>
       <PaperDetail topic_id={params.topic_id} _id={params._id} />
     </Route>

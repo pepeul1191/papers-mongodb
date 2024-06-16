@@ -56,6 +56,18 @@
     file_url: '',
   };
 
+  let messageDetailAlert = {
+    show: false,
+    message: '',
+    class: '',
+  };
+
+  let messageImageAlert = {
+    show: false,
+    message: '',
+    class: '',
+  };
+
   onMount(() => {
     if(_id != null){
       console.log(topic_id);
@@ -108,6 +120,13 @@
       .then(response => {
         //console.log('Respuesta:', response.data);
         paper.file_url = response.data;
+        messageDetailAlert.show = true;
+          messageDetailAlert.message = `Se guardó los cambios en el artículo`;
+          messageDetailAlert.class = 'success';
+          messageDetailAlert = messageDetailAlert;
+          setTimeout(() => {
+            messageDetailAlert.show  = false;
+          }, 5000); 
       })
       .catch(error => {
         console.error('Error al guardar:', error);
@@ -145,13 +164,20 @@
         pictures.push(picture);
         console.log(pictures)
         pictures = pictures;
-        pictue = {
+        picture = {
           _id:  _generateId() ,
           file: null,
           url: '',
           name: '',
           created: '',
         };
+        messageImageAlert.show = true;
+        messageImageAlert.message = `Se guardó la imagen del artículo`;
+        messageImageAlert.class = 'success';
+        messageImageAlert = messageImageAlert;
+        setTimeout(() => {
+          messageImageAlert.show  = false;
+        }, 5000); 
       })
       .catch(error => {
         console.error('Error al guardar:', error);
@@ -163,6 +189,13 @@
     deleteOne(_id)
       .then(data => {
         pictures = pictures.filter(item => item._id !== _id);
+        messageImageAlert.show = true;
+        messageImageAlert.message = `Se eliminó la imagen del artículo`;
+        messageImageAlert.class = 'success';
+        messageImageAlert = messageImageAlert;
+        setTimeout(() => {
+          messageImageAlert.show  = false;
+        }, 5000); 
       })
       .catch(error => {
         console.error('Error al eliminar:', error);
@@ -178,6 +211,11 @@
 <div class="container mt-4">
   <h4 class="mb-4">Formulario de Artículo</h4>
   <hr>
+  {#if messageDetailAlert.show}
+  <div class="alert alert-{messageDetailAlert.class}" role="alert">
+    {@html messageDetailAlert.message}
+  </div>
+  {/if}
   <h5 class="mb-4">Detalle</h5>
   <form>
     <div class="row mb-3">
@@ -261,6 +299,11 @@
     </div>
   </form>
   <hr>
+  {#if messageImageAlert.show}
+  <div class="alert alert-{messageImageAlert.class}" role="alert">
+    {@html messageImageAlert.message}
+  </div>
+  {/if}
   <h5 class="mb-4">Imagenes</h5>
   <div class="mb-12">
     <label for="formFile" class="form-label">Subir Imágen</label>

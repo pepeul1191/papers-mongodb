@@ -121,7 +121,7 @@
     </div>
   </div>
   <hr>
-  <div class="mb-12">
+  <div class="mb-12 col-md-7">
     <table class="table table-striped">
       <thead>
         <tr>

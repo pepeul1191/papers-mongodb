@@ -73,6 +73,13 @@
           topics = topics;
         })
         .catch(error => {
+          messageAlert.show = true;
+          messageAlert.message = `Ocurrió un error al eleminar el tópico`;
+          messageAlert.class = 'danger';
+          messageAlert = messageAlert;
+          setTimeout(() => {
+            messageAlert.show  = false;
+          }, 5000); 
           console.error('Error al eliminar:', error);
           // Manejar el error
         });
@@ -92,6 +99,13 @@
           document.body.removeChild(link);
         })
         .catch(error => {
+          messageAlert.show = true;
+          messageAlert.message = `Ocurrió un error al descargar el backup`;
+          messageAlert.class = 'danger';
+          messageAlert = messageAlert;
+          setTimeout(() => {
+            messageAlert.show  = false;
+          }, 5000); 
           console.error('Error al descargar backup: ', error);
           // Manejar el error
         });

@@ -7,8 +7,6 @@ import { indexCss, indexJs } from '../helpers/home_helper.js';
 const view_routes = [
   '', 
   '/paper', 
-  '/paper/add', 
-  '/paper/edit/:_id', 
   '/topic', 
   '/contact', 
   '/topic/:_id/tag',
