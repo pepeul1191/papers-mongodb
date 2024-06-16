@@ -11,6 +11,7 @@ const view_routes = [
   '/paper/edit/:_id', 
   '/topic', 
   '/contact', 
+  '/topic/:_id/tag',
   '/topic/:_id/paper',
   '/topic/:_id/paper/add',
 ];

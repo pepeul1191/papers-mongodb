@@ -4,10 +4,13 @@
   import { Modal } from 'bootstrap';
   import { fetchAll, deleteOne, fetchByTopicId } from '../../../services/paper_service';
 
+  export let topic_id = null;
   let papers = [];
   let _idToDelete = null;
   let beforeDeleteModal;
-  export let topic_id = null;
+  let pagination = {
+    show: false, numberPages: 0, page: 1, step: 10, offset: 0
+  };
 
   const deleteDocument = (_id) => {
     _idToDelete = _id;
@@ -65,6 +68,11 @@
         .then(data => {
           //console.log('Respuesta:', data);
           papers = data;
+          console.log(papers);
+          pagination.numberPages = Math.ceil(papers.length / pagination.step);
+          if(pagination.numberPages >= 2){
+            pagination.show = true;
+          }
         })
         .catch(error => {
           console.error('Error al guardar:', error);
@@ -124,6 +132,13 @@
         </tr>
       {/each}
     </tbody>
+    <tfoot>
+      <tr>
+        <td colSpan="7">
+          {pagination.numberPages}
+        </td>
+      </tr>
+    </tfoot>
   </table>
   <div class="mb-12 text-end">
     {#if topic_id == null}

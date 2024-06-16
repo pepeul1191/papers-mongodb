@@ -1,28 +1,28 @@
 <script>
-  import { navigate } from 'svelte-routing';  
   import { onMount } from 'svelte';
   import { Modal } from 'bootstrap';
-  import { save, deleteOne, fetchAll, fetchBackup } from '../../../services/topic_service';
+  import { save, deleteOne, fetchAll } from '../../../services/tag_service';
 
-  let newTopic = {
+  export let topic_id = null;
+  let newTag = {
     _id: null,
     name: '',
     created: null,
     edited: null,
+    topic_id: topic_id,
   };
-
   let topics = [];
   let _idToDelete = null;
   let beforeDeleteModal;
 
   const formChange = (event) => {
     const { name, value } = event.target;
-    newTopic = { ...newTopic, [name]: value };
+    newTag = { ...newTag, [name]: value };
   }
 
-  const addTopic = (event) => {
+  const addTag = (event) => {
     event.preventDefault();
-    save(newTopic)
+    save(newTag)
       .then(response => {
         console.log('Respuesta:', response.data);
         topics.push(response.data);
@@ -80,23 +80,6 @@
     closeModal();
   }
 
-  const downloadBackup = () => {
-    fetchBackup()
-      .then(data => {
-          console.log(data);
-          const link = document.createElement('a');
-          link.href = '/' + data;
-          link.setAttribute('download', '');
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        })
-        .catch(error => {
-          console.error('Error al descargar backup: ', error);
-          // Manejar el error
-        });
-  }
-
   onMount(() => {
     beforeDeleteModal = new Modal(beforeDeleteModal);
     fetchAll()
@@ -117,24 +100,21 @@
 </script>
 
 <div class="container mt-4">
-  <h5 class="mb-4">Gestión de Tópicos</h5>
+  <h5 class="mb-4">Gestión de Etiquetas del Tópico</h5>
   {#if messageAlert.show}
   <div class="alert alert-{messageAlert.class}" role="alert">
     {@html messageAlert.message}
   </div>
   {/if}
   <div class="mb-12">
-    <label for="formFile" class="form-label">Nombre del nuevo tópico</label>
+    <label for="formFile" class="form-label">Nombre de la nueva etiqueta</label>
     <div class="row">
       <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="Nombre " id="pictureName" name="name" value={newTopic.name} on:input={formChange}>
+        <input type="text" class="form-control" placeholder="Nombre " id="pictureName" name="name" value={newTag.name} on:input={formChange}>
       </div>
       <div class="col-md-4">
-        <button type="button" class="btn btn-primary ms-3" on:click={addTopic}>
+        <button type="button" class="btn btn-primary ms-3" on:click={addTag}>
           <i class="fa fa-plus"></i>Agregar
-        </button>
-        <button type="button" class="btn btn-success ms-3" on:click={downloadBackup}>
-          <i class="fa fa-download"></i>Descargar Backup
         </button>
       </div>
     </div>
@@ -145,8 +125,6 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Creado</th>
-          <th>Editado</th>
           <th style="text-align: center;">Artículos</th>
           <th>Operaciones</th>
         </tr>
@@ -155,16 +133,8 @@
     {#each topics as topic}
     <tr>
       <td>{topic.name}</td>
-      <td>{topic.created}</td>
-      <td>{topic.updated}</td>
-      <td style="text-align: center;">{topic.papers}</td>
-      <td style="padding-left: 27px;">
-        <a class="btn-button" href="/topic/${topic._id}/tag" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/tag`)}}>
-          <i class="fa fa-tags"></i>
-        </a>
-        <a class="btn-button" href="/topic/${topic._id}/paper" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/paper`)}}>
-          <i class="fa fa-list"></i>
-        </a>
+      <td>0</td>
+      <td style="padding-left: 47px;">
         <a class="btn-button" href="/topic/delete/{topic._id}" aria-current="page" on:click|preventDefault={deleteDocument(topic._id)}>
           <i class="fa fa-trash"></i>
         </a>
