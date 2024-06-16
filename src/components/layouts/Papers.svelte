@@ -3,7 +3,7 @@
   import { Router, Route } from 'svelte-routing';
   import { navigate } from 'svelte-routing';
   import PaperList from '../pages/papers/PaperList.svelte';
-  import TagList from '../pages/papers/TagList.svelte';
+  import TopicTagList from '../pages/papers/TopicTagList.svelte';
   import PaperDetail from '../pages/papers/PaperDetail.svelte';
   import Home from '../pages/papers/Home.svelte';
   import Contact from '../pages/papers/Contact.svelte';
@@ -53,7 +53,7 @@
       <PaperList topic_id={params._id} />
     </Route>
     <Route path="/topic/:_id/tag" let:params>
-      <TagList topic_id={params._id} />
+      <TopicTagList topic_id={params._id} />
     </Route>
     <Route path="/topic/:_id/paper/add" let:params>
       <PaperDetail topic_id={params._id} />

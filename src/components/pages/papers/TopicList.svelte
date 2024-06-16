@@ -148,6 +148,7 @@
           <th>Creado</th>
           <th>Editado</th>
           <th style="text-align: center;">Artículos</th>
+          <th style="text-align: center;">Etiquetas</th>
           <th>Operaciones</th>
         </tr>
       </thead>
@@ -158,6 +159,7 @@
       <td>{topic.created}</td>
       <td>{topic.updated}</td>
       <td style="text-align: center;">{topic.papers}</td>
+      <td style="text-align: center;">{topic.tags}</td>
       <td style="padding-left: 27px;">
         <a class="btn-button" href="/topic/${topic._id}/tag" aria-current="page" on:click|preventDefault={() => {navigate(`/topic/${topic._id}/tag`)}}>
           <i class="fa fa-tags"></i>

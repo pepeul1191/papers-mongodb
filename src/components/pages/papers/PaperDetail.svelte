@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { uploadOne, deleteOne } from '../../../services/image_service';
   import { save as savePaper, fetchOne } from '../../../services/paper_service';
+  
 
   export let _id = null;
   export let topic_id = null;
@@ -192,20 +193,24 @@
         <label for="txtAuthorAbstract" class="form-label">Resumen del Autor</label>
         <textarea class="form-control" id="txtAuthorAbstract" name="author_abstract" value={paper.author_abstract}  on:input={formChange} rows="8"></textarea>
     </div>
+    <!-- Palabras Clave -->
+    <div class="mb-3">
+      <label for="txtKeyWords" class="form-label">Palabras Clave</label>
+      <input type="text" class="form-control" id="txtKeyWords" name="key_words" value={paper.key_words} on:input={formChange}>
+  </div>
+  <!-- Subir un Archivo -->
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Subir un Archivo</label>
+    <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
+  </div>
     <!-- Mi Resumen -->
     <div class="mb-3">
         <label for="txtAbstract" class="form-label">Mi Resumen</label>
         <textarea class="form-control" id="txtAbstract" name="my_abstract" value={paper.my_abstract} on:input={formChange} rows="8"></textarea>
     </div>
-    <!-- Palabras Clave -->
     <div class="mb-3">
-        <label for="txtKeyWords" class="form-label">Palabras Clave</label>
-        <input type="text" class="form-control" id="txtKeyWords" name="key_words" value={paper.key_words} on:input={formChange}>
-    </div>
-    <!-- Subir un Archivo -->
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Subir un Archivo</label>
-      <input type="file" class="form-control" id="formFile" name="file" on:change={formChange}>
+      <label for="formFile" class="form-label">Mis Etiquetas</label>
+      
     </div>
     <div class="mb-12 text-end">
       <button class="btn btn-info btn-form" on:click={createReference}>

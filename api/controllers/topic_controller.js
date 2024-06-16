@@ -24,10 +24,57 @@ router.get('/fetch-all', async (req, res, next) => {
               then: { $size: "$papers" },  // Si es un array, calcula su tamaño
               else: 0                      // Si no es un array (null o vacío), devuelve 0
             }
-           },
+          },
+          tags: { 
+            $cond: {
+              if: { $isArray: "$tags" }, // Verifica si "tags" es un array
+              then: { $size: "$tags" },  // Si es un array, calcula su tamaño
+              else: 0                      // Si no es un array (null o vacío), devuelve 0
+            }
+          },
           created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
           updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
         }
+      }
+    ]).toArray();
+    // save paper
+    client.close();
+    // Retorna el ID de la palabra clave insertada o encontrada
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error al manejar la solicitud:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+router.get('/:_id/tag/fetch-all', async (req, res, next) => {
+  try {
+    const { db, client } = await dbConnection();
+    const topics = db.collection('topics');
+    const _id = req.params._id;
+    const result = await topics.aggregate([
+      {
+        $match: { _id: new ObjectId(_id) }
+      },
+      {
+      $lookup: {
+          from: "tags",
+          localField: "tags",
+          foreignField: "_id",
+          as: "tags_data"
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          "tags_data": 1
+        }
+      },
+      {
+        $unwind: "$tags_data" // Descompone el arreglo tags_data en múltiples documentos
+      },
+      {
+        $replaceRoot: { newRoot: "$tags_data" } // Reemplaza el documento raíz con los documentos dentro de tags_data
       }
     ]).toArray();
     // save paper

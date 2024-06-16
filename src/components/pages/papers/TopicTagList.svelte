@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { Modal } from 'bootstrap';
   import { save, deleteOne, fetchAll } from '../../../services/tag_service';
+  import { fetchAllTags } from '../../../services/topic_service';
 
   export let topic_id = null;
   let newTag = {
@@ -82,7 +83,7 @@
 
   onMount(() => {
     beforeDeleteModal = new Modal(beforeDeleteModal);
-    fetchAll()
+    fetchAllTags(topic_id)
       .then(data => {
         //console.log('Respuesta:', data);
         topics = data;
