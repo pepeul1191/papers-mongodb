@@ -113,7 +113,8 @@
       <tr>
         <th>Nombre</th>
         <th>Autor(s)</th>
-        <th>Fuente</th>
+        <th>Cadena</th>
+        <th>Etiquetas</th>
         <th>Año</th>
         <th>Ranking</th>
         <th>Operaciones</th>
@@ -125,7 +126,14 @@
         <tr>
           <td>{paper.name}</td>
           <td>{paper.authors}</td>
-          <td>{paper.source}</td>
+          <td>{paper.search_string !== undefined ? paper.search_string.name : ''}</td>
+          <td>
+            {#if paper.tags != []}
+              {#each paper.tags as tag}
+                {tag.name}<br>
+              {/each}
+            {/if}
+          </td>
           <td>{paper.year}</td>
           <td>{paper.my_ranking}</td>
           <td style="text-align: center;">

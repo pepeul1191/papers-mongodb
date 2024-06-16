@@ -43,7 +43,23 @@ router.get('/fetch-all', async (req, res, next) => {
           localField: "key_words",
           foreignField: "_id",
           as: "key_words_data"
+        },
+      },
+      {
+        $lookup: {
+          from: "tags",
+          localField: "tags",
+          foreignField: "_id",
+          as: "tags_data"
         }
+      },
+      {
+        $lookup: {
+           from: "search_strings",
+           localField: "search_string_id",
+           foreignField: "_id",
+           as: "search_string"
+         },
       },
       {
         $project: {
@@ -57,6 +73,19 @@ router.get('/fetch-all', async (req, res, next) => {
           source_url: 1,
           my_ranking: 1,
           key_words: 1,
+          search_string: {
+            $arrayElemAt: ["$search_string", 0] // Extrae el primer elemento del array search_string
+          },
+          tags: {
+            $map: {
+              input: "$tags_data",
+              as: "tag2",
+              in: {
+                _id: { $toString: "$$tag2._id" },
+                name: "$$tag2.name" // Corregir aquí para acceder correctamente al campo name
+              }
+            }
+          },
           doi: 1,
           file_url: 1,
           created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
@@ -91,7 +120,7 @@ router.get('/fetch-by-topic', async (req, res, next) => {
     const topics = db.collection('topics');
     const result = await topics.aggregate([
       {
-        $match: { _id: new ObjectId(topicId) }
+        $match: { _id: new ObjectId('666ba42535f79bb08872a119')}
       },
       {
         $lookup: {
@@ -108,6 +137,22 @@ router.get('/fetch-by-topic', async (req, res, next) => {
         $replaceRoot: { newRoot: "$papers" }
       },
       {
+        $lookup: {
+          from: "tags",
+          localField: "tags",
+          foreignField: "_id",
+          as: "tags_data"
+        }
+      },
+      {
+        $lookup: {
+          from: "search_strings",
+          localField: "search_string_id",
+          foreignField: "_id",
+          as: "search_string"
+        },
+      },
+      {
         $project: {
           _id: { $toString: "$_id" },
           authors: 1,
@@ -118,7 +163,19 @@ router.get('/fetch-by-topic', async (req, res, next) => {
           my_ranking: 1,
           file_url: 1,
           doi: 1,
-          source_url: 1,
+          search_string: {
+            $arrayElemAt: ["$search_string", 0] // Extrae el primer elemento del array search_string
+          },
+          tags: {
+            $map: {
+              input: "$tags_data",
+              as: "tag2",
+              in: {
+                _id: { $toString: "$$tag2._id" },
+                name: "$$tag2.name" // Corregir aquí para acceder correctamente al campo name
+              }
+            }
+          },
         }
       }
     ]).toArray();
@@ -173,7 +230,7 @@ router.get('/fetch-one', async(req, res, next) => {
           key_words: 1,
           doi: 1,
           file_url: 1,
-          resarch_string_id: { $toString: "$resarch_string_id" },
+          search_string_id: { $toString: "$search_string_id" },
           created: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$created", timezone: "-05:00" } },
           updated: { $dateToString: { format: "%d/%m/%Y %H:%M:%S", date: "$updated", timezone: "-05:00" } },
           key_words: {
@@ -246,7 +303,7 @@ router.post('/delete', async (req, res, next) => {
 
 router.post('/save', upload.single('file'), async (req, res, next) => {
   try {
-    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id, tags, resarch_string_id } = req.body;
+    const { _id, authors, name, author_abstract, my_abstract, year, source, source_url, my_ranking, key_words, doi, file, file_url, topic_id, tags, search_string_id } = req.body;
     //console.log(file_url);
     let tagsArray = JSON.parse(tags);
     let objectIdTags = tagsArray.map(tag => new ObjectId(tag));
@@ -288,7 +345,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
             file_url: generatedFileUrl,
             updated: now,
             tags: objectIdTags,
-            resarch_string_id: new ObjectId(resarch_string_id)
+            search_string_id: new ObjectId(search_string_id)
           }
         });
     }else{
@@ -304,7 +361,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         my_ranking: my_ranking,
         key_words: keyWordsIdsArray,
         doi: doi,
-        resarch_string_id: resarch_string_id == '' ? null : new ObjectId(resarch_string_id),
+        search_string_id: search_string_id == '' ? null : new ObjectId(search_string_id),
         file_url: generatedFileUrl,
         created: now,
         updated: now,

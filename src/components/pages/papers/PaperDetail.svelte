@@ -57,7 +57,7 @@
     doi: '',
     file: null,
     file_url: '',
-    resarch_string_id: '',
+    search_string_id: '',
   };
 
   let messageDetailAlert = {
@@ -94,7 +94,7 @@
                   paper.year = data.year;
                   paper.source = data.source;
                   paper.source_url = data.source_url;
-                  paper.resarch_string_id = data.resarch_string_id;
+                  paper.search_string_id = data.search_string_id;
                   paper.my_ranking = data.my_ranking;
                   paper.key_words =  data.key_words.map(item => item.name);
                   paper.doi = data.doi;
@@ -135,7 +135,7 @@
             .then(data => {
               //console.log('Respuesta:', data);
               searchStrings = data;
-              console.log(searchStrings)
+              console.log(searchStrings)  
             })
             .catch(error => {
               console.error('Error al guardar:', error);
@@ -279,9 +279,9 @@
     <!-- Cadena -->
     <div class="mb-3">
       <label for="txtName" class="form-label">Cadena de Búsqueda</label>
-      <select class="form-select" id="txtName" name="resarch_string_id" on:change={formChange} bind:value={paper.resarch_string_id} on:change={formChange}>
+      <select class="form-select" id="txtName" name="search_string_id" on:change={formChange} bind:value={paper.search_string_id} on:change={formChange}>
         {#each searchStrings as searchString}
-          {#if searchString._id == paper.resarch_string_id}
+          {#if searchString._id == paper.search_string_id}
             <option value="{searchString._id}" selected>{searchString.name}</option>
           {:else}
             <option value="{searchString._id}">{searchString.name}</option>
