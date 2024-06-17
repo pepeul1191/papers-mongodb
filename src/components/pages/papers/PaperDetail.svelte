@@ -244,6 +244,10 @@
   }
 </script>
 
+<svelte:head>
+	<title>Detalle de un Paper</title>
+</svelte:head>
+
 <div class="container mt-4">
   <h4 class="mb-4">Formulario de Artículo</h4>
   <hr>

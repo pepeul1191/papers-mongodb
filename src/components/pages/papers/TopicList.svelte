@@ -130,6 +130,10 @@
   })
 </script>
 
+<svelte:head>
+	<title>Lista de Tópicos</title>
+</svelte:head>
+
 <div class="container mt-4">
   <h5 class="mb-4">Gestión de Tópicos</h5>
   {#if messageAlert.show}

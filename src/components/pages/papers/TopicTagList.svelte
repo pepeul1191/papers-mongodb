@@ -100,6 +100,10 @@
   })
 </script>
 
+<svelte:head>
+	<title>Lista de Etiquetas de Tópico</title>
+</svelte:head>
+
 <div class="container mt-4">
   <h5 class="mb-4">Gestión de Etiquetas del Tópico</h5>
   {#if messageAlert.show}

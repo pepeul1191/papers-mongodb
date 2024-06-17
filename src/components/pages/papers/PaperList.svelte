@@ -96,6 +96,10 @@
   }
 </script>
 
+<svelte:head>
+	<title>Lista de Papers de Tópico</title>
+</svelte:head>
+
 <div class="container mt-4">
   {#if topic_id == null}
     <h5 class="mb-4">Lista de Todos los Artículos</h5>

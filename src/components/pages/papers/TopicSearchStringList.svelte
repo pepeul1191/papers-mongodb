@@ -86,11 +86,15 @@
   }*/
 </script>
 
+<svelte:head>
+	<title>Lista de Cadenas de Búsqueda de Tópico</title>
+</svelte:head>
+
 <div class="container mt-4">
   {#if topic_id == null}
-    <h5 class="mb-4">Lista de Todos los Artículos</h5>
+    <h5 class="mb-4">Lista de Todos los Cadenas de Búsqueda</h5>
   {:else}
-  <h5 class="mb-4">Lista de los Artículos del Tópico</h5>
+    <h5 class="mb-4">Lista de los Cadenas de Búsqueda del Tópico</h5>
   {/if}
   {#if messageAlert.show}
   <div class="alert alert-{messageAlert.class}" role="alert">

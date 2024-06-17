@@ -1,5 +1,9 @@
 <script></script>
 
+<svelte:head>
+	<title>Contáctenos</title>
+</svelte:head>
+
 <div class="container">
   <div class="row">
     <div class="col-md-6">

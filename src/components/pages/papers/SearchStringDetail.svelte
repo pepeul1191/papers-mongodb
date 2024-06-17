@@ -80,6 +80,10 @@
   }
 </script>
 
+<svelte:head>
+	<title>Detalle de Cadena de Búsqueda</title>
+</svelte:head>
+
 <div class="container mt-4">
   <h4 class="mb-4">Formulario de la Cadena de Búsqueda</h4>
   <hr>
