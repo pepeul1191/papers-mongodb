@@ -83,7 +83,7 @@
 
   const createReference = (event, paper) => {
     event.preventDefault();
-    const reference = `${paper.authors}. ${paper.name}. ${paper.source}, ${paper.year}. DOI: ${paper.doi}`;
+    const reference = `${paper.authors}. ${paper.name}. ${paper.source}, ${paper.year}. ${paper.doi ? 'DOI: ' + paper.doi : 'URL: ' + paper.source_url}`;
     navigator.clipboard.writeText(reference)
     .then(function() {
       console.log('Referencia al portapapeles: ' + reference);

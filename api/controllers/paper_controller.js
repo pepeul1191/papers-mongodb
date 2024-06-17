@@ -159,6 +159,7 @@ router.get('/fetch-by-topic', async (req, res, next) => {
           name: 1,
           year: 1,
           source: 1,
+          source_url: 1,
           year: 1,
           my_ranking: 1,
           file_url: 1,
@@ -345,7 +346,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
             file_url: generatedFileUrl,
             updated: now,
             tags: objectIdTags,
-            search_string_id: new ObjectId(search_string_id)
+            search_string_id: search_string_id == '' || search_string_id == 'null' ? null : new ObjectId(search_string_id),
           }
         });
     }else{
@@ -361,7 +362,7 @@ router.post('/save', upload.single('file'), async (req, res, next) => {
         my_ranking: my_ranking,
         key_words: keyWordsIdsArray,
         doi: doi,
-        search_string_id: search_string_id == '' ? null : new ObjectId(search_string_id),
+        search_string_id: search_string_id == '' || search_string_id == 'null' ? null : new ObjectId(search_string_id),
         file_url: generatedFileUrl,
         created: now,
         updated: now,
