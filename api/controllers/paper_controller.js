@@ -120,7 +120,7 @@ router.get('/fetch-by-topic', async (req, res, next) => {
     const topics = db.collection('topics');
     const result = await topics.aggregate([
       {
-        $match: { _id: new ObjectId('666ba42535f79bb08872a119')}
+        $match: { _id: new ObjectId(topicId)}
       },
       {
         $lookup: {

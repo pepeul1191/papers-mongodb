@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 const url = 'mongodb://localhost:27017'; // Cambia esto según tu configuración
 
-const dbName = 'papers-dev';
+const dbName = 'papers';
 
 const dbConnection = async () => {
   try {
