@@ -5,13 +5,14 @@
   import { fetchAll, deleteOne, fetchByTopicId } from '../../../services/paper_service';
 
   export let topic_id = null;
+  let papersDownloaded = [];
   let papers = [];
   let _idToDelete = null;
   let beforeDeleteModal;
   let pagination = {
     show: false, numberPages: 0, page: 1, step: 10, offset: 0
   };
-
+  let rowsPerPage = [5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 250, 500, 1000];
   const deleteDocument = (_id) => {
     _idToDelete = _id;
     beforeDeleteModal.show();
@@ -67,11 +68,13 @@
       fetchByTopicId(topic_id)
         .then(data => {
           //console.log('Respuesta:', data);
-          papers = data;
-          console.log(papers);
-          pagination.numberPages = Math.ceil(papers.length / pagination.step);
+          papersDownloaded = data;
+          pagination.numberPages = Math.ceil(papersDownloaded.length / pagination.step);
           if(pagination.numberPages >= 2){
             pagination.show = true;
+            papers = papersDownloaded.slice(0, 10);
+          }else{
+            papers = papersDownloaded;
           }
         })
         .catch(error => {
@@ -93,6 +96,47 @@
       console.error('Error al intentar copiar al portapapeles: ', err);
       alert('¡Error al intentar copiar al portapapeles!');
     });
+  }
+
+  const handleStepChange = (event) => {
+    console.log(pagination.step)
+    pagination.step = parseInt(event.target.value);
+    pagination.numberPages = Math.ceil(papersDownloaded.length / pagination.step);
+    pagination.page = 1;
+    papers = papersDownloaded.slice(0, pagination.step);
+  }
+
+  const goBegin = () => {
+    pagination.page = 1;
+    papers = papersDownloaded.slice(0, pagination.step);
+  }
+
+  const goPrevious = () => {
+    if (pagination.page > 1) {
+      pagination.page -= 1;
+      papers = papersDownloaded.slice(
+        (pagination.page - 1) * pagination.step, 
+        (pagination.page * pagination.step)
+      );
+    }
+  }
+
+  const goNext = () => {
+    if (pagination.page < pagination.numberPages) {
+      pagination.page += 1;
+      papers = papersDownloaded.slice(
+        (pagination.page - 1) * pagination.step, 
+        (pagination.page * pagination.step)
+      );
+    }
+  }
+
+  const goLast = () => {
+    pagination.page = pagination.numberPages;
+    papers = papersDownloaded.slice(
+      (pagination.page - 1) * pagination.step, 
+      (pagination.page * pagination.step)
+    );
   }
 </script>
 
@@ -157,13 +201,37 @@
         </tr>
       {/each}
     </tbody>
-    <tfoot>
-      <tr>
-        <td colSpan="7">
-          {pagination.numberPages}
-        </td>
-      </tr>
-    </tfoot>
+    {#if pagination.show}
+      <tfoot>
+        <tr>
+          <td colSpan="7">
+            <div style="text-align: right;">
+              <div class="align-items-center" style="display: inline-block; margin-right: 10px;">
+                <label style="position: relative; float: left; margin-right: 10px;">Filas por página:</label>
+                <select on:change={handleStepChange} bind:value={pagination.step} class="selectPaginationTable">
+                  {#each rowsPerPage as number}
+                    {#if pagination.step == number}
+                      <option value="{number}" selected>{number}</option>
+                    {:else}
+                      <option value="{number}">{number}</option>
+                    {/if}
+                  {/each}
+                </select>
+              </div>
+              {#if pagination.page !== 1}
+                <i class="fa fa-angle-double-left footer-icon pagination-btn" on:click={goBegin} aria-hidden="true"></i> &nbsp;
+                <i class="fa fa-angle-left footer-icon pagination-btn" on:click={goPrevious} aria-hidden="true"></i> &nbsp;
+              {/if}
+              <label class="pagination-number">{pagination.page} / {pagination.numberPages}</label>
+              {#if pagination.page !== pagination.numberPages}
+                &nbsp; <i class="fa fa-angle-right footer-icon pagination-btn" on:click={goNext} aria-hidden="true"></i>
+                &nbsp; <i class="fa fa-angle-double-right footer-icon pagination-btn" on:click={goLast} aria-hidden="true"></i>
+              {/if}
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    {/if}
   </table>
   <div class="mb-12 text-end">
     {#if topic_id == null}
@@ -201,4 +269,35 @@
 </div>
 
 <style>
+
+.selectPaginationTable{
+  width: 50px;
+  border: 0px;
+  background: transparent;
+  text-align: center;
+}
+
+.inputText{
+  border: 0px;
+  background: transparent;
+}
+
+.pagination-btn{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.pagination-btn:hover{
+  cursor: pointer;
+}
+
+.saveButton{
+  margin-left: 10px;
+}
+
+.link{
+  position: relative;
+  float: left;
+  color: var(--bs-table-color-state,var(--bs-table-color-type,var(--bs-table-color)));
+}
 </style>

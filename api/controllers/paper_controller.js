@@ -245,12 +245,16 @@ router.get('/fetch-one', async(req, res, next) => {
             }
           },
           tags: {
-            $map: {
-              input: "$tags",
-              as: "t",
-              in: {
-                $toString: "$$t",
+            $cond: {
+              if: { $isArray: "$tags" },
+              then: {
+                $map: {
+                  input: "$tags",
+                  as: "t",
+                  in: { $toString: "$$t" }
+                }
               },
+              else: []  // Default value if tags is not an array
             }
           },
           images: {

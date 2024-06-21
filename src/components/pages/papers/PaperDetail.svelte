@@ -293,6 +293,10 @@
         {/each}
       </select>
     </div>
+    <div class="mb-3">
+      <label for="txtName" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="txtName" name="name" value={paper.name} on:input={formChange}>
+    </div>
     <!-- Autores del artículo -->
     <div class="mb-3">
         <label for="txtAuthors" class="form-label">Autores</label>
